@@ -125,7 +125,9 @@ Reproduction, modification, distribution or public display of these assets witho
 
 ## License and Usage Restrictions
 
-The presence of assets in this public repository does not grant any license — express or implied — to use the AT Medical trademarks, logos, wordmarks or any other branding elements for any purpose.
+This repository is proprietary. See the [`LICENSE`](./LICENSE) file at the root of this repository for the full terms.
+
+The presence of assets in this public repository does not grant any licence — express or implied — to use the AT Medical trademarks, logos, wordmarks or any other branding elements for any purpose.
 
 Explicit written permission must be obtained from **AT Medical GmbH** prior to any commercial or public use of the assets contained in this repository.
 
