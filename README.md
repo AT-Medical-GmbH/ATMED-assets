@@ -105,7 +105,7 @@ The following names and visual identifiers are protected trademarks of AT Medica
 - AT Medical wordmarks
 - All associated branding elements contained in this repository
 
-Unauthorized use, reproduction or imitation of these trademarks may constitute trademark infringement under **German and international trademark law**, including but not limited to the German Trademark Act (Markengesetz) and the EU Trade Mark Regulation (EUTMR).
+Unauthorised use, reproduction or imitation of these trademarks may constitute trademark infringement under **German and international trademark law**, including but not limited to the German Trademark Act (Markengesetz) and the EU Trade Mark Regulation (EUTMR).
 
 The assets contained in this repository may not be used in any manner that implies endorsement, affiliation or partnership with AT Medical GmbH without explicit prior written permission.
 
