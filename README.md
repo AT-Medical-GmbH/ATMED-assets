@@ -150,8 +150,8 @@ External contributors and internal team members may propose additional assets or
 For trademark usage enquiries, licensing requests or permission to use AT Medical branding assets, please contact:
 
 **AT Medical GmbH**
-- **Email:** [trademark@at-medical.com](mailto:trademark@at-medical.com) *(placeholder — replace with official contact)*
-- **Website:** [https://at-medical.com](https://at-medical.com) *(placeholder — replace with official URL)*
+- **Email:** [trademark@at-medical.com](mailto:trademark@at-medical.com)
+- **Website:** [https://at-medical.com](https://at-medical.com)
 
 For general repository questions or contribution guidelines, please open an issue in this repository.
 
