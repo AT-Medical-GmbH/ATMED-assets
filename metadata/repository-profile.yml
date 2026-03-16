@@ -1,0 +1,48 @@
+# AT Medical Enterprise Repository Profile
+# Canonical configuration for workflows, tagging and governance automation.
+# Do not modify without authorisation from the primary team maintainer.
+
+repository_name: ATMED-assets
+repository_type: platform
+repository_domain: brand-identity
+visibility_class: public
+primary_team: design-communications
+secondary_teams:
+  - infrastructure
+  - platform-engineering
+
+deploy_targets:
+  - webspace
+  - cdn
+  - github-releases
+
+status_relevance: high
+customer_facing: true
+sensitivity_level: medium
+
+artifact_intake_allowed: false
+vps_import_allowed: false
+webspace_import_allowed: true
+r2_import_allowed: true
+
+# Governance
+review_policy: required
+min_reviewers: 1
+code_owner_required: true
+auto_merge_allowed: false
+
+# Lifecycle
+lifecycle_state: active
+maintenance_level: maintained
+release_channel: stable
+
+# Tagging
+default_tags:
+  domain: brand-identity
+  repo-type: platform
+  team-owner: design-communications
+  security-class: proprietary
+  visibility: public
+  review-level: mandatory
+  lifecycle-state: active
+  maintenance-level: maintained

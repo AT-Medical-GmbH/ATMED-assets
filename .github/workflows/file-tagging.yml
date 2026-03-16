@@ -1,0 +1,91 @@
+name: File Tagging
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+  push:
+    branches:
+      - main
+      - develop
+      - "feature/**"
+      - "fix/**"
+      - "hotfix/**"
+      - "release/**"
+      - "copilot/**"
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  validate-file-tags:
+    name: Validate File Tags and Metadata Consistency
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate file-tags.yml is present
+        run: |
+          echo "=== Checking file tag registry ==="
+          if [ -f "metadata/tags/file-tags.yml" ]; then
+            echo "  ✓ metadata/tags/file-tags.yml exists"
+          else
+            echo "  ✗ metadata/tags/file-tags.yml is missing"
+            exit 1
+          fi
+
+      - name: Validate tag dimension consistency across metadata files
+        run: |
+          echo "=== Checking metadata consistency ==="
+          if [ ! -f "metadata/repository-profile.yml" ]; then
+            echo "  ✗ metadata/repository-profile.yml not found"
+            exit 1
+          fi
+
+          if [ ! -f "metadata/tags/taxonomy.yml" ]; then
+            echo "  ✗ metadata/tags/taxonomy.yml not found"
+            exit 1
+          fi
+
+          echo "  ✓ Both profile and taxonomy files present"
+
+          # Verify that the repository domain in the profile is a known domain
+          profile_domain=$(grep "^  domain:" metadata/repository-profile.yml | head -1 | sed 's/.*: //' | tr -d ' ')
+          if [ -n "$profile_domain" ]; then
+            if grep -q "- ${profile_domain}" metadata/tags/taxonomy.yml; then
+              echo "  ✓ Profile domain '${profile_domain}' is in taxonomy"
+            else
+              echo "  ! WARNING: Profile domain '${profile_domain}' not found in taxonomy — please verify"
+            fi
+          fi
+
+          echo "Metadata consistency check complete."
+
+      - name: Check asset files have corresponding tag entries
+        run: |
+          echo "=== Checking asset coverage in file-tags.yml ==="
+          asset_dirs=(
+            "assets/logos"
+            "assets/wordmarks"
+            "assets/icons"
+            "assets/favicons"
+            "assets/social-media"
+            "assets/brand-guidelines"
+          )
+          failed=0
+          for d in "${asset_dirs[@]}"; do
+            if grep -q "$d" metadata/tags/file-tags.yml; then
+              echo "  ✓ $d/ covered in file-tags.yml"
+            else
+              echo "  ! WARNING: $d/ not found in file-tags.yml"
+            fi
+          done
+          echo "Asset coverage check complete."
+
+      - name: Summary
+        run: |
+          echo "=== File Tagging Validation Summary ==="
+          echo "Validation complete. Review any warnings above."

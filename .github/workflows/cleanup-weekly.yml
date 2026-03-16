@@ -1,0 +1,85 @@
+name: Weekly Cleanup
+
+on:
+  schedule:
+    # Run every Sunday at 02:00 UTC
+    - cron: "0 2 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cleanup-check:
+    name: Weekly Repository Maintenance Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check for empty directories
+        run: |
+          echo "=== Checking for empty directories ==="
+          # Find directories that contain only .gitkeep files
+          while IFS= read -r -d '' dir; do
+            # Count non-.gitkeep files
+            count=$(find "$dir" -maxdepth 1 -type f ! -name ".gitkeep" | wc -l)
+            if [ "$count" -eq 0 ]; then
+              echo "  ! EMPTY (placeholder only): $dir"
+            fi
+          done < <(find . -not -path "./.git/*" -type d -print0)
+          echo "Empty directory check complete."
+
+      - name: Check for large files
+        run: |
+          echo "=== Checking for large files (>10MB) ==="
+          found=0
+          while IFS= read -r -d '' file; do
+            size=$(stat -c%s "$file")
+            if [ "$size" -gt 10485760 ]; then
+              echo "  ! LARGE FILE ($(( size / 1048576 ))MB): $file"
+              found=1
+            fi
+          done < <(find . -not -path "./.git/*" -type f -print0)
+          if [ "$found" -eq 0 ]; then
+            echo "  ✓ No files exceeding 10MB found"
+          fi
+          echo "Large file check complete."
+
+      - name: Check for temporary files
+        run: |
+          echo "=== Checking for temporary files ==="
+          temp_patterns=("*.tmp" "*.bak" "*.swp" "*.DS_Store" "Thumbs.db")
+          found=0
+          for pattern in "${temp_patterns[@]}"; do
+            while IFS= read -r -d '' file; do
+              echo "  ! TEMP FILE: $file"
+              found=1
+            done < <(find . -not -path "./.git/*" -name "$pattern" -print0)
+          done
+          if [ "$found" -eq 0 ]; then
+            echo "  ✓ No temporary files found"
+          fi
+          echo "Temporary file check complete."
+
+      - name: Check for stale artifact files
+        run: |
+          echo "=== Checking artifact directories ==="
+          artifact_dirs=("artifacts/incoming" "artifacts/staged")
+          for d in "${artifact_dirs[@]}"; do
+            if [ -d "$d" ]; then
+              count=$(find "$d" -maxdepth 1 -type f ! -name ".gitkeep" | wc -l)
+              echo "  $d: $count file(s)"
+            fi
+          done
+          echo "Artifact check complete."
+
+      - name: Repository size summary
+        run: |
+          echo "=== Repository Size Summary ==="
+          echo "Total repository size:"
+          du -sh . --exclude=.git
+          echo ""
+          echo "Asset directory sizes:"
+          du -sh assets/*/  2>/dev/null || true
+          echo "Cleanup check complete."

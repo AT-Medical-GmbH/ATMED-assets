@@ -2,6 +2,16 @@
 
 Official brand asset repository of AT Medical GmbH — the single authoritative source for all visual identity assets used across the AT Medical ecosystem.
 
+![Repository Type](https://img.shields.io/badge/type-platform-blue?style=flat-square)
+![Layer](https://img.shields.io/badge/layer-brand--identity-blueviolet?style=flat-square)
+![Visibility](https://img.shields.io/badge/visibility-public-brightgreen?style=flat-square)
+![Status](https://img.shields.io/badge/status-active-brightgreen?style=flat-square)
+![Release Channel](https://img.shields.io/badge/release--channel-stable-blue?style=flat-square)
+![Team](https://img.shields.io/badge/team-design--communications-orange?style=flat-square)
+![License](https://img.shields.io/badge/license-proprietary-red?style=flat-square)
+![CI Validation](https://github.com/AT-Medical/ATMED-assets/actions/workflows/ci-validation.yml/badge.svg)
+![Governance Check](https://github.com/AT-Medical/ATMED-assets/actions/workflows/governance-check.yml/badge.svg)
+
 ---
 
 ## Overview
@@ -156,6 +166,12 @@ For trademark usage enquiries, licensing requests or permission to use AT Medica
 - **Website:** [https://at-medical.com](https://at-medical.com)
 
 For general repository questions or contribution guidelines, please open an issue in this repository.
+
+---
+
+<sub style="color: grey; padding-left: 1em; border-left: 3px solid #ccc; display: block;">
+Version: 0.9.0 &nbsp;|&nbsp; Date: 2026-03-16 &nbsp;|&nbsp; Status: verified &nbsp;|&nbsp; Repository: ATMED-assets
+</sub>
 
 ---
 

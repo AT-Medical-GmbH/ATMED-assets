@@ -1,0 +1,85 @@
+name: Repository Self-Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  schedule:
+    # Run every Monday at 06:00 UTC
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  repository-selfcheck:
+    name: Repository Health Self-Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Make self-check script executable
+        run: |
+          if [ -f "scripts/validate/repository-selfcheck.sh" ]; then
+            chmod +x scripts/validate/repository-selfcheck.sh
+          fi
+
+      - name: Run repository self-check script
+        run: |
+          if [ -f "scripts/validate/repository-selfcheck.sh" ]; then
+            bash scripts/validate/repository-selfcheck.sh
+          else
+            echo "WARNING: scripts/validate/repository-selfcheck.sh not found — running inline checks."
+
+            echo "=== Inline Repository Health Check ==="
+            failed=0
+
+            # Check root files
+            for f in README.md LICENSE CONTRIBUTING.md SECURITY.md CODE_OF_CONDUCT.md CHANGELOG.md; do
+              [ -f "$f" ] && echo "  ✓ $f" || { echo "  ✗ MISSING: $f"; failed=1; }
+            done
+
+            # Check metadata
+            [ -f "metadata/repository-profile.yml" ] && echo "  ✓ metadata/repository-profile.yml" || { echo "  ✗ MISSING: metadata/repository-profile.yml"; failed=1; }
+
+            # Check workflows
+            for wf in ci-validation governance-check tag-validation file-tagging dependency-check cleanup-weekly repository-selfcheck; do
+              [ -f ".github/workflows/${wf}.yml" ] && echo "  ✓ .github/workflows/${wf}.yml" || { echo "  ! WARNING: .github/workflows/${wf}.yml missing"; }
+            done
+
+            if [ "$failed" -eq 1 ]; then
+              echo "Self-check FAILED. See errors above."
+              exit 1
+            fi
+            echo "Self-check PASSED."
+          fi
+
+      - name: Validate secret references
+        run: |
+          echo "=== Checking for hardcoded secrets ==="
+          # Basic check for patterns that should use GitHub Secrets
+          failed=0
+          if grep -rE "(password|api_key|secret|token)\s*=\s*['\"][^'\"]{8,}" \
+            --include="*.yml" --include="*.yaml" --include="*.sh" \
+            --exclude-dir=".git" . 2>/dev/null | grep -v "secrets\." | grep -v "#"; then
+            echo "  ! WARNING: Possible hardcoded credentials detected — please review"
+            failed=1
+          else
+            echo "  ✓ No obvious hardcoded credentials detected"
+          fi
+          echo "Secret reference check complete."
+
+      - name: Health check summary
+        run: |
+          echo "=== Repository Health Check Summary ==="
+          echo "Repository: ATMED-assets"
+          echo "Date: $(date -u '+%Y-%m-%d %H:%M UTC')"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit: ${{ github.sha }}"
+          echo ""
+          echo "All health checks complete. Review any warnings above."

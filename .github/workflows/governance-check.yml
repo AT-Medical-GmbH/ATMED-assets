@@ -1,0 +1,148 @@
+name: Governance Check
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - "feature/**"
+      - "fix/**"
+      - "hotfix/**"
+      - "release/**"
+      - "copilot/**"
+  pull_request:
+    branches:
+      - main
+      - develop
+
+permissions:
+  contents: read
+
+jobs:
+  governance-check:
+    name: Governance and Corporate Identity Compliance
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check AT Medical GmbH® spelling in documentation
+        run: |
+          echo "=== Checking corporate identity spelling ==="
+          failed=0
+
+          # Check README.md for correct AT Medical GmbH references
+          if [ -f "README.md" ]; then
+            if grep -qi "at medical gmbh" README.md; then
+              echo "  ✓ README.md contains AT Medical GmbH reference"
+            else
+              echo "  ! WARNING: README.md does not contain AT Medical GmbH reference"
+            fi
+          fi
+
+          # Check for incorrect branding variations
+          incorrect_patterns=(
+            "AT-Medical GmbH"
+            "ATMedical GmbH"
+            "At Medical GmbH"
+            "at medical gmbh"
+          )
+          docs_to_check=("README.md" "CONTRIBUTING.md" "SECURITY.md" "CODE_OF_CONDUCT.md")
+          for doc in "${docs_to_check[@]}"; do
+            if [ -f "$doc" ]; then
+              for pattern in "${incorrect_patterns[@]}"; do
+                if grep -q "$pattern" "$doc"; then
+                  echo "  ✗ INCORRECT BRANDING in $doc: '$pattern'"
+                  failed=1
+                fi
+              done
+            fi
+          done
+
+          if [ "$failed" -eq 1 ]; then
+            echo "ERROR: Corporate identity spelling issues detected."
+            exit 1
+          fi
+          echo "Corporate identity check passed."
+
+      - name: Check documentation headers
+        run: |
+          echo "=== Checking documentation structure ==="
+          docs=("README.md" "CONTRIBUTING.md" "SECURITY.md" "CODE_OF_CONDUCT.md")
+          failed=0
+          for doc in "${docs[@]}"; do
+            if [ -f "$doc" ]; then
+              if head -5 "$doc" | grep -q "^#"; then
+                echo "  ✓ $doc has heading"
+              else
+                echo "  ✗ $doc missing top-level heading"
+                failed=1
+              fi
+            else
+              echo "  ✗ MISSING: $doc"
+              failed=1
+            fi
+          done
+          if [ "$failed" -eq 1 ]; then
+            echo "ERROR: Documentation header issues detected."
+            exit 1
+          fi
+          echo "Documentation headers valid."
+
+      - name: Check verification blocks in governance documents
+        run: |
+          echo "=== Checking verification blocks ==="
+          governance_docs=("CONTRIBUTING.md" "SECURITY.md" "CODE_OF_CONDUCT.md" "CHANGELOG.md")
+          failed=0
+          for doc in "${governance_docs[@]}"; do
+            if [ -f "$doc" ]; then
+              if grep -q "Version:" "$doc" && grep -q "Status: verified" "$doc"; then
+                echo "  ✓ $doc has verification block"
+              else
+                echo "  ✗ $doc missing verification block"
+                failed=1
+              fi
+            fi
+          done
+          if [ "$failed" -eq 1 ]; then
+            echo "ERROR: One or more governance documents are missing the verification block."
+            exit 1
+          fi
+          echo "Verification blocks present in all governance documents."
+
+      - name: Check license file
+        run: |
+          echo "=== Checking LICENSE file ==="
+          if [ -f "LICENSE" ]; then
+            if grep -qi "AT Medical GmbH" LICENSE; then
+              echo "  ✓ LICENSE references AT Medical GmbH"
+            else
+              echo "  ✗ LICENSE does not reference AT Medical GmbH"
+              exit 1
+            fi
+          else
+            echo "  ✗ LICENSE file is missing"
+            exit 1
+          fi
+          echo "LICENSE check passed."
+
+      - name: Check dependabot configuration
+        run: |
+          echo "=== Checking Dependabot configuration ==="
+          if [ -f ".github/dependabot.yml" ]; then
+            echo "  ✓ .github/dependabot.yml exists"
+          else
+            echo "  ✗ .github/dependabot.yml is missing"
+            exit 1
+          fi
+          echo "Dependabot configuration check passed."
+
+      - name: Check repository profile metadata
+        run: |
+          echo "=== Checking repository-profile.yml ==="
+          if [ ! -f "metadata/repository-profile.yml" ]; then
+            echo "  ✗ metadata/repository-profile.yml is missing"
+            exit 1
+          fi
+          echo "  ✓ metadata/repository-profile.yml exists"
+          echo "Metadata check passed."

@@ -1,0 +1,66 @@
+# AT Medical Enterprise Tag Examples
+# Reference examples for applying the tagging taxonomy correctly.
+
+version: "1.0"
+last_updated: "2026-03-16"
+
+examples:
+
+  - context: Brand asset repository (public platform)
+    tags:
+      domain: brand-identity
+      repo-type: platform
+      team-owner: design-communications
+      deploy-target: cdn
+      security-class: proprietary
+      visibility: public
+      review-level: mandatory
+      lifecycle-state: active
+      maintenance-level: maintained
+
+  - context: Internal infrastructure repository (private)
+    tags:
+      domain: infrastructure
+      repo-type: infrastructure
+      team-owner: infrastructure
+      deploy-target: vps
+      security-class: confidential
+      visibility: private
+      review-level: mandatory
+      lifecycle-state: active
+      maintenance-level: actively-developed
+
+  - context: Public documentation repository
+    tags:
+      domain: documentation
+      repo-type: documentation
+      team-owner: platform-engineering
+      deploy-target: webspace
+      security-class: public
+      visibility: public
+      review-level: recommended
+      lifecycle-state: active
+      maintenance-level: maintained
+
+  - context: Archived research repository
+    tags:
+      domain: research
+      repo-type: research
+      team-owner: academy
+      security-class: internal
+      visibility: private
+      review-level: optional
+      lifecycle-state: archived
+      maintenance-level: archived
+
+  - context: Academy learning platform
+    tags:
+      domain: academy
+      repo-type: academy
+      team-owner: academy
+      deploy-target: webspace
+      security-class: internal
+      visibility: private
+      review-level: mandatory
+      lifecycle-state: active
+      maintenance-level: actively-developed

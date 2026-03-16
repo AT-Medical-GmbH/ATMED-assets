@@ -1,0 +1,113 @@
+# AT Medical Enterprise File Tags
+# Maps individual files or directories to their applicable tag dimensions.
+# Updated as new assets are added to the repository.
+
+version: "1.0"
+last_updated: "2026-03-16"
+
+file_tags:
+
+  - path: assets/logos/
+    tags:
+      domain: brand-identity
+      security-class: proprietary
+      team-owner: design-communications
+      review-level: mandatory
+
+  - path: assets/wordmarks/
+    tags:
+      domain: brand-identity
+      security-class: proprietary
+      team-owner: design-communications
+      review-level: mandatory
+
+  - path: assets/icons/
+    tags:
+      domain: brand-identity
+      security-class: proprietary
+      team-owner: design-communications
+      review-level: recommended
+
+  - path: assets/illustrations/
+    tags:
+      domain: brand-identity
+      security-class: proprietary
+      team-owner: design-communications
+      review-level: recommended
+
+  - path: assets/social-media/
+    tags:
+      domain: brand-identity
+      security-class: proprietary
+      team-owner: design-communications
+      review-level: recommended
+
+  - path: assets/presentations/
+    tags:
+      domain: brand-identity
+      security-class: proprietary
+      team-owner: design-communications
+      review-level: optional
+
+  - path: assets/documents/
+    tags:
+      domain: brand-identity
+      security-class: proprietary
+      team-owner: design-communications
+      review-level: optional
+
+  - path: assets/website/
+    tags:
+      domain: brand-identity
+      security-class: proprietary
+      team-owner: design-communications
+      review-level: recommended
+
+  - path: assets/favicons/
+    tags:
+      domain: brand-identity
+      security-class: proprietary
+      team-owner: design-communications
+      review-level: recommended
+
+  - path: assets/brand-guidelines/
+    tags:
+      domain: brand-identity
+      security-class: proprietary
+      team-owner: design-communications
+      review-level: mandatory
+
+  - path: metadata/
+    tags:
+      domain: governance
+      security-class: internal
+      team-owner: infrastructure
+      review-level: mandatory
+
+  - path: .github/workflows/
+    tags:
+      domain: devops
+      security-class: internal
+      team-owner: infrastructure
+      review-level: mandatory
+
+  - path: scripts/
+    tags:
+      domain: devops
+      security-class: internal
+      team-owner: infrastructure
+      review-level: recommended
+
+  - path: docs/
+    tags:
+      domain: documentation
+      security-class: internal
+      team-owner: platform-engineering
+      review-level: recommended
+
+  - path: artifacts/
+    tags:
+      domain: brand-identity
+      security-class: proprietary
+      team-owner: design-communications
+      review-level: mandatory
