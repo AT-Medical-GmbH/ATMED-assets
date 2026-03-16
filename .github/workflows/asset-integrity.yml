@@ -1,0 +1,109 @@
+name: Asset Integrity Check
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'assets/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'assets/**'
+
+permissions:
+  contents: read
+
+jobs:
+  integrity:
+    name: Asset Integrity Verification
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify canonical logo SVG is well-formed
+        run: |
+          if [ ! -f "assets/logos/svg/logo.svg" ]; then
+            echo "FAIL: Canonical logo missing: assets/logos/svg/logo.svg"
+            exit 1
+          fi
+
+          python3 -c "
+          import xml.etree.ElementTree as ET, sys
+          try:
+              tree = ET.parse('assets/logos/svg/logo.svg')
+              root = tree.getroot()
+              if 'svg' not in root.tag:
+                  print('FAIL: Root element is not svg')
+                  sys.exit(1)
+              print('OK:   assets/logos/svg/logo.svg is well-formed SVG')
+          except ET.ParseError as e:
+              print(f'FAIL: SVG parse error: {e}')
+              sys.exit(1)
+          "
+
+      - name: Check for empty asset directories (excluding .gitkeep)
+        run: |
+          warn=0
+          for dir in assets/logos/svg assets/logos/png assets/wordmarks/svg assets/wordmarks/png assets/favicons; do
+            count=$(find "$dir" -type f ! -name '.gitkeep' ! -name 'README.md' 2>/dev/null | wc -l)
+            if [ "$count" -eq 0 ]; then
+              echo "WARN: No production assets found in $dir"
+              warn=1
+            else
+              echo "OK:   $dir contains $count asset file(s)"
+            fi
+          done
+
+          if [ "$warn" -eq 1 ]; then
+            echo ""
+            echo "Warning: some expected asset directories are empty. This may be intentional for new directories."
+          fi
+
+      - name: Verify no executable files in assets
+        run: |
+          found=$(find assets/ -type f -executable ! -name '.gitkeep' 2>/dev/null)
+          if [ -n "$found" ]; then
+            echo "FAIL: Executable files found in assets/ — this is not permitted:"
+            echo "$found"
+            exit 1
+          fi
+          echo "OK:   No executable files found in assets/"
+
+      - name: Validate SVG files are well-formed XML
+        run: |
+          failed=0
+          while IFS= read -r -d '' svg; do
+            python3 -c "
+          import xml.etree.ElementTree as ET, sys
+          try:
+              ET.parse('$svg')
+          except ET.ParseError as e:
+              print(f'FAIL: $svg — {e}')
+              sys.exit(1)
+          " || failed=1
+            echo "OK:   $svg"
+          done < <(find assets/ -name '*.svg' -print0)
+
+          if [ "$failed" -eq 1 ]; then
+            exit 1
+          fi
+
+      - name: Check no asset files exceed 10 MB
+        run: |
+          failed=0
+          while IFS= read -r -d '' f; do
+            size=$(stat -c%s "$f")
+            if [ "$size" -gt 10485760 ]; then
+              echo "FAIL: File exceeds 10 MB: $f ($(( size / 1048576 )) MB)"
+              failed=1
+            fi
+          done < <(find assets/ -type f ! -name '.gitkeep' -print0)
+
+          if [ "$failed" -eq 1 ]; then
+            exit 1
+          fi
+          echo "OK:   All asset files are within the 10 MB size limit"

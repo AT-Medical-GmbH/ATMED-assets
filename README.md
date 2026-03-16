@@ -1,5 +1,12 @@
 # AT Medical Brand Assets
 
+![Type](https://img.shields.io/badge/type-assets-blue)
+![Visibility](https://img.shields.io/badge/visibility-public-brightgreen)
+![Status](https://img.shields.io/badge/status-active-success)
+![Deploy](https://img.shields.io/badge/deploy-R2%20%7C%20CDN-orange)
+![Team](https://img.shields.io/badge/team-infrastructure-informational)
+![Team](https://img.shields.io/badge/team-design-blueviolet)
+
 Official brand asset repository of AT Medical GmbH — the single authoritative source for all visual identity assets used across the AT Medical ecosystem.
 
 ---
@@ -45,6 +52,14 @@ assets/
 │
 ├── icons/                  Standalone brand icons and pictograms
 │
+├── badges/                 CI badges and status indicators
+│
+├── branding/               Supplementary brand elements and colour assets
+│
+├── diagrams/               Architecture and infrastructure diagrams
+│
+├── templates/              Branded document and slide templates
+│
 ├── illustrations/          Custom illustrations and decorative graphics
 │
 ├── social-media/           Assets formatted for social media platforms
@@ -69,6 +84,9 @@ assets/
 │   └── apple-touch-icon/   Apple touch icons for iOS home screens
 │
 └── brand-guidelines/       Official AT Medical brand guidelines and documentation
+
+docs/                       Repository documentation
+metadata/                   Repository profile and governance metadata
 ```
 
 ---
@@ -156,6 +174,31 @@ For trademark usage enquiries, licensing requests or permission to use AT Medica
 - **Website:** [https://at-medical.com](https://at-medical.com)
 
 For general repository questions or contribution guidelines, please open an issue in this repository.
+
+---
+
+## Repository Governance
+
+| Field | Value |
+|---|---|
+| Repository type | assets |
+| Domain | assets, branding, logos |
+| Visibility | public |
+| Customer-facing | true |
+| Deploy targets | Cloudflare R2, CDN |
+| Primary team | @AT-Medical/infrastructure-team |
+| Secondary teams | @AT-Medical/admin-team, @AT-Medical/devops-team, @AT-Medical/design-team |
+| Review policy | required |
+
+---
+
+<!-- Version block -->
+| Field | Value |
+|---|---|
+| Version | 0.9.0 |
+| Date | 2026-03-16 |
+| Status | Verified |
+| Repository | ATMED-assets |
 
 ---
 

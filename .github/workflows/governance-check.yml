@@ -1,0 +1,112 @@
+name: Governance Check
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'metadata/**'
+      - '.github/CODEOWNERS'
+      - 'SECURITY.md'
+      - 'CONTRIBUTING.md'
+      - 'CODE_OF_CONDUCT.md'
+      - 'LICENSE'
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  governance:
+    name: Governance and Metadata Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate repository profile YAML
+        run: |
+          python3 -c "
+          import yaml, sys
+
+          with open('metadata/repository-profile.yml') as f:
+              data = yaml.safe_load(f)
+
+          errors = []
+
+          if data.get('visibility') != 'public':
+              errors.append('visibility must be public')
+
+          if not isinstance(data.get('deploy-targets'), list):
+              errors.append('deploy-targets must be a list')
+          else:
+              for target in ['r2', 'cdn']:
+                  if target not in data['deploy-targets']:
+                      errors.append(f'deploy-targets must include: {target}')
+
+          if data.get('customer-facing') is not True:
+              errors.append('customer-facing must be true')
+
+          if data.get('review') != 'required':
+              errors.append('review must be required')
+
+          if not data.get('teams', {}).get('primary'):
+              errors.append('teams.primary must be set')
+
+          if errors:
+              print('Governance check FAILED:')
+              for e in errors:
+                  print(f'  - {e}')
+              sys.exit(1)
+
+          print('Governance check PASSED')
+          "
+
+      - name: Verify CODEOWNERS is present and non-empty
+        run: |
+          if [ ! -s ".github/CODEOWNERS" ]; then
+            echo "FAIL: .github/CODEOWNERS is missing or empty"
+            exit 1
+          fi
+          echo "OK:   .github/CODEOWNERS"
+
+      - name: Verify security policy covers required sections
+        run: |
+          required_sections=(
+            "Reporting"
+            "Scope"
+            "Asset Integrity"
+          )
+
+          failed=0
+          for section in "${required_sections[@]}"; do
+            if ! grep -qi "$section" SECURITY.md; then
+              echo "FAIL: SECURITY.md missing section: $section"
+              failed=1
+            else
+              echo "OK:   SECURITY.md contains: $section"
+            fi
+          done
+
+          if [ "$failed" -eq 1 ]; then
+            exit 1
+          fi
+
+      - name: Check version block is present in major docs
+        run: |
+          docs=("SECURITY.md" "CONTRIBUTING.md" "CODE_OF_CONDUCT.md" "CHANGELOG.md")
+          failed=0
+          for doc in "${docs[@]}"; do
+            if ! grep -q "Version" "$doc"; then
+              echo "FAIL: $doc is missing version block"
+              failed=1
+            else
+              echo "OK:   $doc has version block"
+            fi
+          done
+          if [ "$failed" -eq 1 ]; then
+            exit 1
+          fi

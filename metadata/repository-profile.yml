@@ -1,0 +1,37 @@
+# ATMED-assets — Repository Profile
+# Maintained by AT Medical Infrastructure Team
+
+repo-name: ATMED-assets
+repo-type: assets
+domain:
+  - assets
+  - branding
+  - logos
+visibility: public
+customer-facing: true
+
+deploy-targets:
+  - r2
+  - cdn
+
+teams:
+  primary: infrastructure-team
+  secondary:
+    - admin-team
+    - devops-team
+    - design-team
+
+review: required
+
+topics:
+  - domain:assets
+  - domain:branding
+  - domain:logos
+  - visibility:public
+  - deploy-target:r2
+  - deploy-target:cdn
+  - owner:infrastructure-team
+  - owner:design-team
+
+status: active
+version: 0.9.0

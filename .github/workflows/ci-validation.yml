@@ -1,0 +1,108 @@
+name: CI Validation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate Repository Structure
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check required root files exist
+        run: |
+          required_files=(
+            "README.md"
+            "LICENSE"
+            "SECURITY.md"
+            "CONTRIBUTING.md"
+            "CODE_OF_CONDUCT.md"
+            "CHANGELOG.md"
+            "metadata/repository-profile.yml"
+            ".github/CODEOWNERS"
+          )
+
+          failed=0
+          for f in "${required_files[@]}"; do
+            if [ ! -f "$f" ]; then
+              echo "FAIL: Required file missing: $f"
+              failed=1
+            else
+              echo "OK:   $f"
+            fi
+          done
+
+          if [ "$failed" -eq 1 ]; then
+            echo ""
+            echo "One or more required files are missing. Please add them before merging."
+            exit 1
+          fi
+
+      - name: Check required asset directories exist
+        run: |
+          required_dirs=(
+            "assets/logos/svg"
+            "assets/logos/png"
+            "assets/wordmarks"
+            "assets/icons"
+            "assets/badges"
+            "assets/branding"
+            "assets/diagrams"
+            "assets/templates"
+            "assets/favicons"
+            "docs"
+            "metadata"
+          )
+
+          failed=0
+          for d in "${required_dirs[@]}"; do
+            if [ ! -d "$d" ]; then
+              echo "FAIL: Required directory missing: $d"
+              failed=1
+            else
+              echo "OK:   $d"
+            fi
+          done
+
+          if [ "$failed" -eq 1 ]; then
+            echo ""
+            echo "One or more required directories are missing."
+            exit 1
+          fi
+
+      - name: Check canonical logo path is valid
+        run: |
+          if [ ! -f "assets/logos/svg/logo.svg" ]; then
+            echo "FAIL: Canonical logo file missing: assets/logos/svg/logo.svg"
+            exit 1
+          fi
+          echo "OK:   assets/logos/svg/logo.svg"
+
+      - name: Check repository profile metadata is valid YAML
+        run: |
+          python3 -c "
+          import yaml, sys
+          with open('metadata/repository-profile.yml') as f:
+              data = yaml.safe_load(f)
+          required = ['repo-name', 'repo-type', 'domain', 'visibility', 'customer-facing', 'deploy-targets', 'teams', 'status', 'version']
+          failed = False
+          for key in required:
+              if key not in data:
+                  print(f'FAIL: Missing required key in repository-profile.yml: {key}')
+                  failed = True
+              else:
+                  print(f'OK:   {key}')
+          if failed:
+              sys.exit(1)
+          "
