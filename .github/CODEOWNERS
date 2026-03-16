@@ -1,0 +1,38 @@
+# CODEOWNERS
+# This file defines code ownership for the ATMED-assets repository.
+# Owners are automatically assigned as reviewers on pull requests.
+# See: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owners — infrastructure team reviews all changes
+*                                           @AT-Medical/infrastructure-team
+
+# Governance and metadata — infrastructure and admin teams
+/metadata/                                  @AT-Medical/infrastructure-team @AT-Medical/admin-team
+/SECURITY.md                                @AT-Medical/infrastructure-team @AT-Medical/admin-team
+/CONTRIBUTING.md                            @AT-Medical/infrastructure-team
+/CODE_OF_CONDUCT.md                         @AT-Medical/infrastructure-team @AT-Medical/admin-team
+/CHANGELOG.md                               @AT-Medical/infrastructure-team
+/LICENSE                                    @AT-Medical/infrastructure-team @AT-Medical/admin-team
+/.github/                                   @AT-Medical/infrastructure-team @AT-Medical/devops-team
+
+# Brand-critical assets — require design team approval
+/assets/logos/                              @AT-Medical/infrastructure-team @AT-Medical/design-team
+/assets/wordmarks/                          @AT-Medical/infrastructure-team @AT-Medical/design-team
+/assets/branding/                           @AT-Medical/infrastructure-team @AT-Medical/design-team
+/assets/icons/                              @AT-Medical/infrastructure-team @AT-Medical/design-team
+
+# Other assets — infrastructure team
+/assets/badges/                             @AT-Medical/infrastructure-team @AT-Medical/devops-team
+/assets/diagrams/                           @AT-Medical/infrastructure-team @AT-Medical/devops-team
+/assets/templates/                          @AT-Medical/infrastructure-team @AT-Medical/design-team
+/assets/illustrations/                      @AT-Medical/infrastructure-team @AT-Medical/design-team
+/assets/social-media/                       @AT-Medical/infrastructure-team @AT-Medical/design-team
+/assets/presentations/                      @AT-Medical/infrastructure-team @AT-Medical/design-team
+/assets/website/                            @AT-Medical/infrastructure-team @AT-Medical/design-team
+/assets/favicons/                           @AT-Medical/infrastructure-team @AT-Medical/design-team
+/assets/documents/                          @AT-Medical/infrastructure-team @AT-Medical/design-team
+/assets/brand-guidelines/                   @AT-Medical/infrastructure-team @AT-Medical/design-team
+
+# Documentation
+/docs/                                      @AT-Medical/infrastructure-team
+/README.md                                  @AT-Medical/infrastructure-team

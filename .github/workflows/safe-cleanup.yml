@@ -1,0 +1,78 @@
+name: Safe Cleanup
+
+on:
+  schedule:
+    # Run weekly on Sunday at 03:00 UTC
+    - cron: '0 3 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cleanup:
+    name: Safe Repository Cleanup
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Report empty directories
+        run: |
+          echo "Checking for empty directories (excluding tracked .gitkeep)..."
+          echo ""
+
+          empty_count=0
+          while IFS= read -r -d '' dir; do
+            # Count files, ignoring .gitkeep
+            count=$(find "$dir" -maxdepth 1 -type f ! -name '.gitkeep' 2>/dev/null | wc -l)
+            subdir=$(find "$dir" -maxdepth 1 -mindepth 1 -type d 2>/dev/null | wc -l)
+            if [ "$count" -eq 0 ] && [ "$subdir" -eq 0 ]; then
+              echo "  Empty directory: $dir"
+              empty_count=$((empty_count + 1))
+            fi
+          done < <(find assets/ -type d ! -path 'assets/' -print0)
+
+          if [ "$empty_count" -eq 0 ]; then
+            echo "  No empty directories found."
+          else
+            echo ""
+            echo "$empty_count empty directory/directories found. Consider adding assets or .gitkeep files."
+          fi
+
+      - name: Report large files
+        run: |
+          echo "Checking for files larger than 5 MB..."
+          echo ""
+
+          found=0
+          while IFS= read -r -d '' f; do
+            size=$(stat -c%s "$f")
+            if [ "$size" -gt 5242880 ]; then
+              echo "  Large file ($(( size / 1048576 )) MB): $f"
+              found=1
+            fi
+          done < <(find assets/ -type f ! -name '.gitkeep' -print0)
+
+          if [ "$found" -eq 0 ]; then
+            echo "  No large files found."
+          fi
+
+      - name: Report duplicate filenames across asset directories
+        run: |
+          echo "Checking for potentially duplicate asset filenames..."
+          echo ""
+
+          find assets/ -type f ! -name '.gitkeep' ! -name 'README.md' -printf '%f\n' | sort | uniq -d | while read -r dup; do
+            echo "  Duplicate filename: $dup"
+            find assets/ -name "$dup" ! -name '.gitkeep' ! -name 'README.md'
+            echo ""
+          done || echo "  No duplicate filenames detected."
+
+      - name: Summary
+        run: |
+          echo ""
+          echo "Safe cleanup check complete."
+          echo "No files were modified. All findings above are informational only."
+          echo "To act on findings, raise a pull request with the proposed changes."

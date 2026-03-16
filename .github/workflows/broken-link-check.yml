@@ -1,0 +1,74 @@
+name: Broken Link Check
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**.md'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '**.md'
+  schedule:
+    # Run weekly on Monday at 06:00 UTC
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  broken-links:
+    name: Check for Broken Links
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check internal file references in Markdown files
+        run: |
+          python3 << 'EOF'
+          import os
+          import re
+          import sys
+
+          root = os.getcwd()
+          md_files = []
+          for dirpath, _, filenames in os.walk(root):
+              if '.git' in dirpath:
+                  continue
+              for f in filenames:
+                  if f.endswith('.md'):
+                      md_files.append(os.path.join(dirpath, f))
+
+          link_pattern = re.compile(r'\[.*?\]\(([^)]+)\)')
+          failed = False
+
+          for md_file in md_files:
+              with open(md_file) as f:
+                  content = f.read()
+
+              matches = link_pattern.findall(content)
+              for link in matches:
+                  # Skip external URLs and anchors
+                  if link.startswith('http://') or link.startswith('https://') or link.startswith('#') or link.startswith('mailto:'):
+                      continue
+
+                  # Resolve relative path
+                  base_dir = os.path.dirname(md_file)
+                  resolved = os.path.normpath(os.path.join(base_dir, link))
+
+                  if not os.path.exists(resolved):
+                      rel_md = os.path.relpath(md_file, root)
+                      print(f'FAIL: Broken internal link in {rel_md}: {link}')
+                      failed = True
+
+          if failed:
+              print('\nOne or more broken internal links were found.')
+              sys.exit(1)
+          else:
+              print('OK:   All internal links are valid.')
+          EOF
