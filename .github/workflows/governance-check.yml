@@ -145,4 +145,36 @@ jobs:
             exit 1
           fi
           echo "  ✓ metadata/repository-profile.yml exists"
+
+          python3 -c "
+          import yaml, sys
+          with open('metadata/repository-profile.yml') as f:
+              data = yaml.safe_load(f)
+          errors = []
+          if data.get('visibility') != 'public' and data.get('visibility_class') != 'public':
+              errors.append('visibility/visibility_class must be public')
+          if data.get('customer-facing') is not True and data.get('customer_facing') is not True:
+              errors.append('customer-facing/customer_facing must be true')
+          review = data.get('review') or data.get('review_policy')
+          if review != 'required':
+              errors.append('review/review_policy must be required')
+          if not data.get('teams', {}).get('primary') and not data.get('primary_team'):
+              errors.append('teams.primary or primary_team must be set')
+          if errors:
+              print('Governance check FAILED:')
+              for e in errors:
+                  print(f'  - {e}')
+              sys.exit(1)
+          print('  ✓ Governance metadata validation passed')
+          "
           echo "Metadata check passed."
+
+      - name: Verify CODEOWNERS is present and non-empty
+        run: |
+          echo "=== Checking .github/CODEOWNERS ==="
+          if [ ! -s ".github/CODEOWNERS" ]; then
+            echo "  ✗ .github/CODEOWNERS is missing or empty"
+            exit 1
+          fi
+          echo "  ✓ .github/CODEOWNERS is present and non-empty"
+          echo "CODEOWNERS check passed."

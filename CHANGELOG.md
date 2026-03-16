@@ -6,45 +6,66 @@ This changelog follows the [Keep a Changelog](https://keepachangelog.com/en/1.0.
 
 ---
 
-## [Unreleased]
+## [0.9.0] — 2026-03-16
 
 ### Added
+
+- Enterprise standardisation: repository transformed into AT Medical central asset repository
 - Enterprise directory structure (`configs/`, `metadata/`, `docs/`, `scripts/`, `tests/`, `templates/`, `status/`, `artifacts/`)
-- `metadata/repository-profile.yml` — canonical machine-readable repository governance metadata
+- `metadata/repository-profile.yml` — canonical machine-readable repository governance profile with deploy targets, team ownership and governance settings
 - `metadata/tags/taxonomy.yml` — full tag dimension and value taxonomy
 - `metadata/tags/rules.yml` — automated tag enforcement rules
 - `metadata/tags/examples.yml` — tagging reference examples
 - `metadata/tags/file-tags.yml` — per-path file tagging registry
 - `CONTRIBUTING.md` — enterprise contribution policy
-- `SECURITY.md` — security disclosure policy
+- `SECURITY.md` — security and asset integrity policy
 - `CODE_OF_CONDUCT.md` — community and collaboration standards
 - `CHANGELOG.md` — this file
+- `.github/CODEOWNERS` — repository ownership mapping by directory
 - `.github/dependabot.yml` — automated dependency update configuration
-- `.github/workflows/ci-validation.yml` — continuous integration and structure validation
-- `.github/workflows/governance-check.yml` — governance and corporate identity compliance check
-- `.github/workflows/tag-validation.yml` — tag taxonomy validation workflow
-- `.github/workflows/file-tagging.yml` — automated file tagging on pull requests and pushes
-- `.github/workflows/dependency-check.yml` — dependency audit workflow
-- `.github/workflows/cleanup-weekly.yml` — weekly automated cleanup workflow
-- `.github/workflows/repository-selfcheck.yml` — repository health self-check workflow
+- GitHub Actions workflows:
+  - `ci-validation.yml` — continuous integration and structure validation
+  - `governance-check.yml` — governance, metadata and corporate identity compliance
+  - `tag-validation.yml` — tag taxonomy validation
+  - `file-tagging.yml` — automated file tagging on pull requests and pushes
+  - `dependency-check.yml` — dependency audit workflow
+  - `cleanup-weekly.yml` — weekly automated cleanup workflow
+  - `repository-selfcheck.yml` — repository health self-check workflow
+  - `asset-integrity.yml` — asset integrity verification
+  - `broken-link-check.yml` — automated broken link detection
+  - `repo-self-check.yml` — repository structure self-check
+  - `safe-cleanup.yml` — automated safe cleanup on schedule
 - `scripts/validate/repository-selfcheck.sh` — repository structure and consistency validation script
 - `docs/architecture/README.md` — architecture overview
 - `docs/governance/README.md` — governance documentation
 - `docs/operations/README.md` — operational documentation
 - `docs/deployment/README.md` — deployment documentation
 - `artifacts/incoming/`, `artifacts/staged/`, `artifacts/releases/` — artifact intake directories
+- New asset directories:
+  - `assets/badges/` — CI badges and status indicators
+  - `assets/branding/` — supplementary brand elements
+  - `assets/templates/` — branded document and slide templates
+  - `assets/diagrams/` — architecture and infrastructure diagrams
 - Enterprise badges added to `README.md`
-- Standardised verification block added to governance documents
+- Repository governance table and version block added to `README.md`
+- Standardised verification blocks added to governance documents
 - `Abschlussbericht_ATMED-assets.md` — enterprise standardisation completion report
 
 ### Changed
-- `README.md` updated with enterprise badge block and verification footer
+
+- `README.md` updated with enterprise badge block, governance table and verification footer
+- `metadata/repository-profile.yml` unified to include both legacy compatibility keys and extended governance fields
+
+### Fixed
+
+- Ensured canonical logo path `assets/logos/svg/logo.svg` is valid and accessible to other repositories
 
 ---
 
 ## [0.1.0] — 2025-01-01
 
 ### Added
+
 - Initial repository creation
 - Core asset directory structure (`assets/logos/`, `assets/wordmarks/`, `assets/icons/`, `assets/illustrations/`, `assets/social-media/`, `assets/presentations/`, `assets/documents/`, `assets/website/`, `assets/favicons/`, `assets/brand-guidelines/`)
 - `README.md` — repository overview and usage policy

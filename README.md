@@ -2,13 +2,14 @@
 
 Official brand asset repository of AT Medical GmbH — the single authoritative source for all visual identity assets used across the AT Medical ecosystem.
 
-![Repository Type](https://img.shields.io/badge/type-platform-blue?style=flat-square)
+![Repository Type](https://img.shields.io/badge/type-assets-blue?style=flat-square)
 ![Layer](https://img.shields.io/badge/layer-brand--identity-blueviolet?style=flat-square)
 ![Visibility](https://img.shields.io/badge/visibility-public-brightgreen?style=flat-square)
 ![Status](https://img.shields.io/badge/status-active-brightgreen?style=flat-square)
 ![Release Channel](https://img.shields.io/badge/release--channel-stable-blue?style=flat-square)
 ![Team](https://img.shields.io/badge/team-design--communications-orange?style=flat-square)
 ![License](https://img.shields.io/badge/license-proprietary-red?style=flat-square)
+![Deploy](https://img.shields.io/badge/deploy-R2%20%7C%20CDN-orange?style=flat-square)
 ![CI Validation](https://github.com/AT-Medical/ATMED-assets/actions/workflows/ci-validation.yml/badge.svg)
 ![Governance Check](https://github.com/AT-Medical/ATMED-assets/actions/workflows/governance-check.yml/badge.svg)
 
@@ -55,6 +56,14 @@ assets/
 │
 ├── icons/                  Standalone brand icons and pictograms
 │
+├── badges/                 CI badges and status indicators
+│
+├── branding/               Supplementary brand elements and colour assets
+│
+├── diagrams/               Architecture and infrastructure diagrams
+│
+├── templates/              Branded document and slide templates
+│
 ├── illustrations/          Custom illustrations and decorative graphics
 │
 ├── social-media/           Assets formatted for social media platforms
@@ -79,6 +88,10 @@ assets/
 │   └── apple-touch-icon/   Apple touch icons for iOS home screens
 │
 └── brand-guidelines/       Official AT Medical brand guidelines and documentation
+
+docs/                       Repository documentation
+metadata/                   Repository profile and governance metadata
+scripts/                    Validation and maintenance scripts
 ```
 
 ---
@@ -155,6 +168,8 @@ External contributors and internal team members may propose additional assets or
 - Contributors must confirm that submitted assets are original works or that appropriate rights have been obtained and that the submission does not infringe third-party intellectual property.
 - Maintainers reserve the right to reject any contribution that does not meet brand standards or legal requirements.
 
+For detailed contribution guidelines, see [CONTRIBUTING.md](./CONTRIBUTING.md).
+
 ---
 
 ## Contact
@@ -169,9 +184,28 @@ For general repository questions or contribution guidelines, please open an issu
 
 ---
 
-<sub style="color: grey; padding-left: 1em; border-left: 3px solid #ccc; display: block;">
-Version: 0.9.0 &nbsp;|&nbsp; Date: 2026-03-16 &nbsp;|&nbsp; Status: verified &nbsp;|&nbsp; Repository: ATMED-assets
-</sub>
+## Repository Governance
+
+| Field | Value |
+|---|---|
+| Repository type | assets |
+| Domain | assets, branding, logos |
+| Visibility | public |
+| Customer-facing | true |
+| Deploy targets | Cloudflare R2, CDN, GitHub Releases |
+| Primary team | @AT-Medical/infrastructure-team |
+| Secondary teams | @AT-Medical/admin-team, @AT-Medical/devops-team, @AT-Medical/design-team |
+| Review policy | required |
+
+---
+
+<!-- Version block -->
+| Field | Value |
+|---|---|
+| Version | 0.9.0 |
+| Date | 2026-03-16 |
+| Status | verified |
+| Repository | ATMED-assets |
 
 ---
 

@@ -35,7 +35,7 @@ All contributions must meet the following requirements before they will be consi
 2. Add or update assets in the appropriate directory under `assets/`.
 3. Update the relevant `README.md` file in the asset directory if required.
 4. Submit a pull request against the `main` branch.
-5. Ensure all automated checks pass before requesting a review.
+5. Ensure all automated CI checks pass (asset integrity validation, governance checks, broken-link detection) before requesting a review.
 6. Await review from an authorised AT Medical maintainer.
 
 ---

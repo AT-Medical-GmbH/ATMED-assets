@@ -36,6 +36,8 @@ jobs:
             "SECURITY.md"
             "CODE_OF_CONDUCT.md"
             "CHANGELOG.md"
+            "metadata/repository-profile.yml"
+            ".github/CODEOWNERS"
           )
           failed=0
           for f in "${required_files[@]}"; do

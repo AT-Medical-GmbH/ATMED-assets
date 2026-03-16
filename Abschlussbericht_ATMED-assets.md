@@ -71,6 +71,7 @@ All existing assets and content have been preserved. Enterprise governance, auto
 
 | File                                          | Description                                      |
 |-----------------------------------------------|--------------------------------------------------|
+| `.github/CODEOWNERS`                          | Repository ownership mapping by directory        |
 | `.github/dependabot.yml`                      | Automated dependency update configuration        |
 | `.github/workflows/ci-validation.yml`         | Structure and content validation                 |
 | `.github/workflows/governance-check.yml`      | Corporate identity and documentation compliance  |
@@ -79,6 +80,10 @@ All existing assets and content have been preserved. Enterprise governance, auto
 | `.github/workflows/dependency-check.yml`      | Action and dependency audit                      |
 | `.github/workflows/cleanup-weekly.yml`        | Weekly repository maintenance checks             |
 | `.github/workflows/repository-selfcheck.yml`  | Full repository health self-check                |
+| `.github/workflows/asset-integrity.yml`       | Asset integrity verification on push/PR          |
+| `.github/workflows/broken-link-check.yml`     | Automated broken link detection in Markdown      |
+| `.github/workflows/repo-self-check.yml`       | Repository structure self-check (daily schedule) |
+| `.github/workflows/safe-cleanup.yml`          | Weekly safe cleanup report                       |
 
 ### 3.4 Scripts
 
@@ -110,13 +115,17 @@ All existing assets and content have been preserved. Enterprise governance, auto
 
 | Workflow                    | Trigger                        | Checks Performed                                 |
 |-----------------------------|--------------------------------|--------------------------------------------------|
-| `ci-validation.yml`         | PR, push to all branches       | Required files, directories, metadata, workflows, asset directories, script executability |
-| `governance-check.yml`      | PR, push to all branches       | Corporate identity spelling, documentation headers, verification blocks, licence, dependabot |
+| `ci-validation.yml`         | PR, push to all branches       | Required files (incl. CODEOWNERS), directories, metadata, workflows, asset directories, script executability |
+| `governance-check.yml`      | PR, push to all branches       | Corporate identity spelling, documentation headers, verification blocks, licence, dependabot, CODEOWNERS, metadata YAML |
 | `tag-validation.yml`        | PR, push (metadata/ paths)     | Taxonomy files, required tag dimensions, file tag path references |
 | `file-tagging.yml`          | PR, push to all branches       | File tag registry completeness, asset coverage   |
 | `dependency-check.yml`      | Push to main, schedule         | Action version pinning, dependabot configuration  |
 | `cleanup-weekly.yml`        | Schedule (weekly)              | Empty directories, large files, temp files, artifact counts |
 | `repository-selfcheck.yml`  | Push to main, schedule, manual | Full health check via `repository-selfcheck.sh`  |
+| `asset-integrity.yml`       | PR, push (assets/ paths)       | SVG well-formedness, executable files, file size limits |
+| `broken-link-check.yml`     | PR, push (*.md), schedule      | Internal file references in all Markdown files   |
+| `repo-self-check.yml`       | PR, push, daily schedule       | Directory completeness, asset inventory, metadata keys |
+| `safe-cleanup.yml`          | Weekly schedule                | Empty directories, large files, duplicate filenames |
 
 ---
 
@@ -138,7 +147,6 @@ The following steps require manual action by an AT Medical maintainer and cannot
 |-----------------------------------|------------------------------------------------------------------|
 | Branch protection rules           | Configure in GitHub repository settings for `main` and `develop` |
 | Team access configuration         | Assign the `design-communications` and `infrastructure` teams in GitHub settings |
-| CODEOWNERS file                   | Create `.github/CODEOWNERS` to assign mandatory reviewers by path |
 | Dependabot label creation         | Create the `compatibility` label in GitHub Issues settings       |
 | CDN / R2 deployment configuration | Configure deployment pipelines in `configs/automation/deploy/`   |
 | Webspace integration              | Configure webspace publishing pipeline                           |
@@ -160,14 +168,13 @@ The following steps require manual action by an AT Medical maintainer and cannot
 ## 9. Next Recommendations
 
 1. **Enable branch protection** on `main` with the status check requirements listed in `docs/governance/README.md`
-2. **Create CODEOWNERS file** to enforce mandatory review by path (e.g., logos, wordmarks require design-communications review)
-3. **Configure Dependabot label** — create the `compatibility` label in repository settings
-4. **Populate `configs/automation/`** — add deployment and CDN configuration files as integration pipelines are implemented
-5. **Add assets** — populate `assets/` directories with actual brand asset files as they are prepared for publication
-6. **Set up CDN publishing** — configure the asset distribution pipeline from `artifacts/releases/` to the AT Medical CDN
-7. **Implement status reporting** — connect `status/generated/` outputs to the AT Medical status platform
-8. **Review taxonomy** — periodically review `metadata/tags/taxonomy.yml` as the organisation grows and new domains emerge
-9. **Upgrade workflow versions** — monitor `actions/checkout` and other action dependencies for new releases via Dependabot
+2. **Configure Dependabot label** — create the `compatibility` label in repository settings
+3. **Populate `configs/automation/`** — add deployment and CDN configuration files as integration pipelines are implemented
+4. **Add assets** — populate `assets/` directories with actual brand asset files as they are prepared for publication
+5. **Set up CDN publishing** — configure the asset distribution pipeline from `artifacts/releases/` to the AT Medical CDN
+6. **Implement status reporting** — connect `status/generated/` outputs to the AT Medical status platform
+7. **Review taxonomy** — periodically review `metadata/tags/taxonomy.yml` as the organisation grows and new domains emerge
+8. **Upgrade workflow versions** — monitor `actions/checkout` and other action dependencies for new releases via Dependabot
 
 ---
 

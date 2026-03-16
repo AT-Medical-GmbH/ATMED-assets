@@ -68,6 +68,24 @@ AT Medical GmbH supports responsible disclosure. We ask that:
 - You do not exploit any vulnerability beyond what is necessary to demonstrate the issue.
 - You do not access, modify or delete data that does not belong to you.
 
+Reporters who act in good faith and contact us privately will receive acknowledgement and be kept informed of resolution progress. We do not pursue legal action against good-faith security reporters.
+
+---
+
+## Scope
+
+This security policy applies to:
+
+- All assets hosted in this repository (logos, icons, wordmarks, branding elements, favicons, illustrations, templates, badges, diagrams)
+- The repository configuration, metadata and CI/CD workflow definitions
+- Any CDN or R2 deployment serving assets from this repository
+
+---
+
+## Asset Integrity
+
+All assets in this repository are governed by automated integrity checks executed on every push and pull request. Any change to an existing asset in `assets/logos/` or `assets/wordmarks/` triggers a mandatory review by the AT Medical infrastructure team and design team before merging.
+
 ---
 
 ## Contact

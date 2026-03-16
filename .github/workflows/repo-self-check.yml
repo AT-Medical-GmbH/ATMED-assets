@@ -1,0 +1,126 @@
+name: Repository Self-Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  schedule:
+    # Run daily at 05:00 UTC
+    - cron: '0 5 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  self-check:
+    name: Repository Structure Self-Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Print repository summary
+        run: |
+          echo "====================================="
+          echo " ATMED-assets Repository Self-Check"
+          echo "====================================="
+          echo ""
+          echo "Branch: $GITHUB_REF_NAME"
+          echo "SHA:    $GITHUB_SHA"
+          echo "Date:   $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          echo ""
+
+      - name: Validate directory structure completeness
+        run: |
+          python3 << 'EOF'
+          import os
+          import sys
+
+          required = [
+              'assets/logos/svg',
+              'assets/logos/png',
+              'assets/logos/monochrome',
+              'assets/logos/dark-mode',
+              'assets/logos/light-mode',
+              'assets/wordmarks/svg',
+              'assets/wordmarks/png',
+              'assets/wordmarks/horizontal',
+              'assets/wordmarks/vertical',
+              'assets/icons',
+              'assets/illustrations',
+              'assets/social-media/linkedin',
+              'assets/social-media/instagram',
+              'assets/social-media/banners',
+              'assets/social-media/thumbnails',
+              'assets/presentations',
+              'assets/documents',
+              'assets/website/headers',
+              'assets/website/footers',
+              'assets/website/backgrounds',
+              'assets/website/ui-elements',
+              'assets/favicons/ico',
+              'assets/favicons/png',
+              'assets/favicons/apple-touch-icon',
+              'assets/brand-guidelines',
+              'assets/badges',
+              'assets/branding',
+              'assets/templates',
+              'assets/diagrams',
+              'docs',
+              'metadata',
+          ]
+
+          missing = []
+          for d in required:
+              if not os.path.isdir(d):
+                  missing.append(d)
+
+          if missing:
+              print('FAIL: Missing directories:')
+              for d in missing:
+                  print(f'  - {d}')
+              sys.exit(1)
+          else:
+              print(f'OK:   All {len(required)} required directories are present.')
+          EOF
+
+      - name: Count and report assets
+        run: |
+          echo "Asset inventory:"
+          echo ""
+          for dir in assets/logos assets/wordmarks assets/icons assets/badges assets/diagrams assets/templates assets/branding assets/favicons assets/illustrations assets/social-media assets/presentations assets/documents assets/website assets/brand-guidelines; do
+            count=$(find "$dir" -type f ! -name '.gitkeep' ! -name 'README.md' 2>/dev/null | wc -l)
+            echo "  $dir: $count file(s)"
+          done
+
+      - name: Check for required metadata keys
+        run: |
+          python3 -c "
+          import yaml, sys
+          with open('metadata/repository-profile.yml') as f:
+              data = yaml.safe_load(f)
+
+          checks = [
+              ('repo-type', 'assets'),
+              ('visibility', 'public'),
+              ('customer-facing', True),
+              ('review', 'required'),
+          ]
+
+          failed = False
+          for key, expected in checks:
+              actual = data.get(key)
+              if actual != expected:
+                  print(f'FAIL: {key} = {actual!r} (expected {expected!r})')
+                  failed = True
+              else:
+                  print(f'OK:   {key} = {actual!r}')
+
+          if failed:
+              sys.exit(1)
+          "

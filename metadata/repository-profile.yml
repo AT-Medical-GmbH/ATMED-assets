@@ -1,19 +1,67 @@
+# ATMED-assets — Repository Profile
 # AT Medical Enterprise Repository Profile
 # Canonical configuration for workflows, tagging and governance automation.
 # Do not modify without authorisation from the primary team maintainer.
+# Maintained by AT Medical Infrastructure Team
 
+# ── Identity ─────────────────────────────────────────────────────────────────
 repository_name: ATMED-assets
-repository_type: platform
+repository_type: assets
 repository_domain: brand-identity
 visibility_class: public
-primary_team: design-communications
+# primary_team: lead governance team (brand/design for asset decisions)
+primary_team: infrastructure-team
 secondary_teams:
-  - infrastructure
+  - design-communications
   - platform-engineering
+  - admin-team
+  - devops-team
+  - design-team
 
-deploy_targets:
-  - webspace
+# ── Legacy compatibility keys (used by repo-self-check and governance workflows)
+repo-name: ATMED-assets
+repo-type: assets
+domain:
+  - assets
+  - branding
+  - logos
+visibility: public
+customer-facing: true
+
+deploy-targets:
+  - r2
   - cdn
+  - webspace
+  - github-releases
+
+teams:
+  primary: infrastructure-team
+  secondary:
+    - admin-team
+    - devops-team
+    - design-team
+    - design-communications
+
+review: required
+
+topics:
+  - domain:assets
+  - domain:branding
+  - domain:logos
+  - visibility:public
+  - deploy-target:r2
+  - deploy-target:cdn
+  - owner:infrastructure-team
+  - owner:design-team
+
+status: active
+version: 0.9.0
+
+# ── Extended governance fields ────────────────────────────────────────────────
+deploy_targets:
+  - r2
+  - cdn
+  - webspace
   - github-releases
 
 status_relevance: high
@@ -39,7 +87,7 @@ release_channel: stable
 # Tagging
 default_tags:
   domain: brand-identity
-  repo-type: platform
+  repo-type: assets
   team-owner: design-communications
   security-class: proprietary
   visibility: public
