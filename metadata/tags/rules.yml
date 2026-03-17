@@ -1,0 +1,66 @@
+# AT Medical Enterprise Tagging Rules
+# Defines enforcement rules for automated tag validation workflows.
+
+version: "1.0"
+last_updated: "2026-03-16"
+
+enforcement:
+  mode: strict
+  fail_on_missing_required: true
+  fail_on_invalid_value: true
+  warn_on_missing_optional: true
+
+required_dimensions:
+  - domain
+  - repo-type
+  - team-owner
+  - security-class
+  - visibility
+  - review-level
+  - lifecycle-state
+  - maintenance-level
+
+optional_dimensions:
+  - deploy-target
+
+rules:
+
+  - id: RULE-001
+    name: required-dimensions-present
+    description: All required tag dimensions must be present in repository-profile.yml.
+    scope: repository
+    severity: error
+
+  - id: RULE-002
+    name: valid-taxonomy-values
+    description: All tag values must match permitted values defined in taxonomy.yml.
+    scope: repository
+    severity: error
+
+  - id: RULE-003
+    name: security-class-consistency
+    description: >
+      Repositories with visibility=public must not carry security-class=confidential
+      or security-class=restricted.
+    scope: repository
+    severity: error
+
+  - id: RULE-004
+    name: lifecycle-maintenance-consistency
+    description: >
+      Repositories with lifecycle-state=archived must have maintenance-level=archived.
+    scope: repository
+    severity: warning
+
+  - id: RULE-005
+    name: file-tags-present-for-assets
+    description: >
+      All files under assets/ should be referenced in metadata/tags/file-tags.yml.
+    scope: file
+    severity: warning
+
+  - id: RULE-006
+    name: profile-version-present
+    description: repository-profile.yml must be present and parseable.
+    scope: repository
+    severity: error

@@ -1,0 +1,115 @@
+# AT Medical Enterprise Tag Taxonomy
+# Defines all valid tag dimensions and their permitted values.
+# Used by automated tagging workflows and validation checks.
+
+version: "1.0"
+last_updated: "2026-03-16"
+maintained_by: infrastructure
+
+dimensions:
+
+  domain:
+    description: Functional domain of the repository or file.
+    required: true
+    values:
+      - brand-identity
+      - infrastructure
+      - platform
+      - web
+      - tools
+      - research
+      - documentation
+      - academy
+      - auth
+      - sandbox
+      - governance
+      - devops
+      - security
+
+  repo-type:
+    description: Structural classification of the repository.
+    required: true
+    values:
+      - infrastructure
+      - platform
+      - web
+      - tools
+      - research
+      - documentation
+      - academy
+      - auth
+      - sandbox
+      - governance
+      - devops
+
+  team-owner:
+    description: Primary team responsible for this repository or file.
+    required: true
+    values:
+      - design-communications
+      - infrastructure
+      - platform-engineering
+      - security
+      - academy
+      - management
+      - devops
+
+  deploy-target:
+    description: Target deployment environment or distribution channel.
+    required: false
+    values:
+      - vps
+      - webspace
+      - cloudflare-r2
+      - cdn
+      - github-releases
+      - internal
+      - none
+
+  security-class:
+    description: Data sensitivity and access classification.
+    required: true
+    values:
+      - public
+      - internal
+      - confidential
+      - proprietary
+      - restricted
+
+  visibility:
+    description: GitHub repository visibility.
+    required: true
+    values:
+      - public
+      - private
+      - internal
+
+  review-level:
+    description: Required review depth for changes.
+    required: true
+    values:
+      - mandatory
+      - recommended
+      - optional
+      - automated-only
+
+  lifecycle-state:
+    description: Current operational lifecycle state.
+    required: true
+    values:
+      - active
+      - maintained
+      - deprecated
+      - archived
+      - planning
+      - beta
+
+  maintenance-level:
+    description: Ongoing maintenance commitment level.
+    required: true
+    values:
+      - actively-developed
+      - maintained
+      - minimal
+      - community
+      - archived

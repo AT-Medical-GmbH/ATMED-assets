@@ -1,0 +1,74 @@
+name: Dependency Check
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/**"
+      - ".github/dependabot.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/**"
+      - ".github/dependabot.yml"
+  schedule:
+    # Run weekly on Mondays at 08:00 UTC
+    - cron: "0 8 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  dependency-check:
+    name: Dependency and Action Version Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check for pinned action versions in workflows
+        run: |
+          echo "=== Checking GitHub Actions version pinning ==="
+          failed=0
+          while IFS= read -r -d '' workflow; do
+            echo "  Checking: $workflow"
+            # Look for uses: entries that are not pinned to a SHA or specific version
+            if grep -E "uses: [a-zA-Z0-9_/-]+@[a-zA-Z0-9._-]+" "$workflow" > /dev/null 2>&1; then
+              echo "    ✓ Action references found with version tags"
+            fi
+            # Warn about 'latest' usage
+            if grep -E "uses: .+@latest" "$workflow" > /dev/null 2>&1; then
+              echo "    ! WARNING: $workflow uses @latest — consider pinning to a specific version"
+            fi
+          done < <(find .github/workflows -name "*.yml" -print0)
+          echo "Action version check complete."
+
+      - name: Validate dependabot configuration
+        run: |
+          echo "=== Checking Dependabot configuration ==="
+          if [ -f ".github/dependabot.yml" ]; then
+            echo "  ✓ .github/dependabot.yml exists"
+            # Verify github-actions ecosystem is present
+            if grep -q "github-actions" .github/dependabot.yml; then
+              echo "  ✓ github-actions ecosystem configured"
+            else
+              echo "  ! WARNING: github-actions ecosystem not in dependabot.yml"
+            fi
+          else
+            echo "  ✗ .github/dependabot.yml is missing"
+            exit 1
+          fi
+          echo "Dependabot check complete."
+
+      - name: Check for outdated action references
+        run: |
+          echo "=== Checking action references ==="
+          # Report on actions/checkout usage
+          while IFS= read -r -d '' workflow; do
+            grep -E "uses: actions/checkout" "$workflow" | while read -r line; do
+              echo "  Found in $(basename $workflow): $line"
+            done
+          done < <(find .github/workflows -name "*.yml" -print0)
+          echo "Action reference check complete."

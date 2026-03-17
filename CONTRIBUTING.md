@@ -1,104 +1,84 @@
 # Contributing to ATMED-assets
 
-Thank you for your interest in contributing to the AT Medical central asset repository. This document outlines the requirements and process for proposing changes or additions to brand assets.
+## AT Medical GmbH — Brand Asset Contribution Policy
+
+This document outlines the requirements and process for contributing to the **ATMED-assets** repository. All contributions must comply with the AT Medical Enterprise Repository Standard and the official AT Medical Brand Guidelines.
 
 ---
 
-## Who Can Contribute
+## Who May Contribute
 
-Contributions are accepted from:
+Contributions to this repository may be submitted by:
 
-- **AT Medical team members** — internal staff with valid GitHub access to this organisation
-- **Authorised external contributors** — third parties who have received explicit written permission from AT Medical GmbH
-
-All contributions are subject to review and approval by the AT Medical infrastructure team and, for brand-critical assets, the design team.
-
----
-
-## What Can Be Contributed
-
-### Accepted contributions
-
-- New assets that comply with the official AT Medical Brand Guidelines
-- Corrected or updated versions of existing assets
-- New subdirectory structures with associated `README.md` files
-- Improvements to governance documentation
-
-### Not accepted
-
-- Assets that deviate from the official AT Medical colour palette, typography or visual identity standards
-- Third-party logos, trademarks or branding elements
-- Placeholder or draft assets that are not production-ready
-- Modifications to existing logos, wordmarks or primary brand assets without explicit approval from the design team
+- Authorised AT Medical GmbH team members
+- Contracted designers and agencies acting under an active engagement with AT Medical GmbH
+- External contributors proposing corrections or improvements via pull request, subject to approval by repository maintainers
 
 ---
 
-## Contribution Process
+## Contribution Requirements
 
-1. **Open an issue first** — Before submitting a pull request, open a GitHub issue describing the asset you wish to add or the change you wish to make. Include the intended use case and any relevant context.
+All contributions must meet the following requirements before they will be considered for review:
 
-2. **Branch naming** — Create a branch following this convention:
-   - `feature/asset-description` — for new assets
-   - `fix/asset-description` — for corrections to existing assets
-   - `docs/description` — for documentation-only changes
-
-3. **Prepare your pull request** — Ensure your PR includes:
-   - A clear description of the asset, its intended use case and its source or author
-   - Confirmation that the asset complies with the AT Medical Brand Guidelines
-   - Confirmation that the asset is an original work or that appropriate rights have been obtained
-   - Relevant `README.md` updates for the affected directory
-
-4. **Review** — All pull requests require review and approval by at least one member of `@AT-Medical/infrastructure-team`. Brand-critical assets additionally require approval from `@AT-Medical/design-team`.
-
-5. **CI checks** — All pull requests must pass automated CI checks, including asset integrity validation and broken-link detection. Pull requests that fail CI checks will not be merged.
+1. **Brand compliance** — Submitted assets must comply with the official AT Medical Brand Guidelines available in `assets/brand-guidelines/`.
+2. **File format** — Assets must be provided in the correct format for their category (SVG for vector assets, PNG for raster assets, and so on).
+3. **Naming conventions** — File names must follow the existing naming conventions within each asset directory.
+4. **Attribution** — Contributors must confirm that submitted assets are original works or that appropriate intellectual property rights have been obtained.
+5. **No third-party infringement** — Submissions must not infringe any third-party intellectual property, trademark or copyright.
+6. **Pull request description** — All pull requests must include a clear description of the asset, its intended use case and the source or author.
 
 ---
 
-## Asset Standards
+## Pull Request Process
 
-### File formats
-
-| Asset type | Preferred format | Acceptable formats |
-|---|---|---|
-| Logos | SVG | PNG |
-| Wordmarks | SVG | PNG |
-| Icons | SVG | PNG |
-| Favicons | ICO, PNG | — |
-| Diagrams | SVG, PNG | PDF |
-| Templates | SVG, PDF | — |
-| Badges | SVG | PNG |
-
-### Naming conventions
-
-- Use lowercase filenames with hyphens (kebab-case): `logo-dark-mode.svg`
-- Do not include version numbers in filenames — use directory versioning if necessary
-- Do not include spaces in filenames
-
-### Directory placement
-
-Always place assets in the most specific appropriate subdirectory. Refer to the repository structure in `README.md` for guidance.
+1. Fork the repository and create a feature branch following the naming convention: `feature/<short-description>`.
+2. Add or update assets in the appropriate directory under `assets/`.
+3. Update the relevant `README.md` file in the asset directory if required.
+4. Submit a pull request against the `main` branch.
+5. Ensure all automated CI checks pass (asset integrity validation, governance checks, broken-link detection) before requesting a review.
+6. Await review from an authorised AT Medical maintainer.
 
 ---
 
-## Code of Conduct
+## Review and Approval
 
-All contributors are expected to adhere to the `CODE_OF_CONDUCT.md` at the root of this repository.
+- **Brand-critical assets** — logos, wordmarks and primary colour palette definitions — require formal review and sign-off by an authorised AT Medical maintainer before being merged.
+- Maintainers reserve the right to reject any contribution that does not meet brand standards or legal requirements.
+- Review comments must be addressed before a pull request may be merged.
+- Minimum of one approved review is required for all merges to `main`.
+
+---
+
+## Prohibited Contributions
+
+The following will not be accepted under any circumstances:
+
+- Modifications to approved logos or wordmarks without explicit authorisation
+- Assets that alter, dilute or otherwise compromise AT Medical's visual identity
+- Third-party branding combined with AT Medical branding without explicit written approval
+- Any asset that violates German or international trademark or copyright law
+
+---
+
+## Reporting Issues
+
+If you identify a problem with an existing asset — such as a corrupted file, incorrect colour values or a formatting issue — please open an issue in this repository with a clear description and, where possible, a screenshot or example of the problem.
 
 ---
 
 ## Contact
 
-For questions about the contribution process, please open a GitHub issue. For brand or trademark enquiries, contact [trademark@at-medical.com](mailto:trademark@at-medical.com).
+For questions about contribution eligibility or brand compliance, contact:
+
+**AT Medical GmbH**
+- Email: [trademark@at-medical.com](mailto:trademark@at-medical.com)
+- Website: [https://at-medical.com](https://at-medical.com)
 
 ---
 
-<!-- Version block -->
-| Field | Value |
-|---|---|
-| Version | 0.9.0 |
-| Date | 2026-03-16 |
-| Status | Verified |
-| Repository | ATMED-assets |
+<sub style="color: grey; padding-left: 1em; border-left: 3px solid #ccc; display: block;">
+Version: 0.9.0 &nbsp;|&nbsp; Date: 2026-03-16 &nbsp;|&nbsp; Status: verified &nbsp;|&nbsp; Repository: ATMED-assets
+</sub>
 
 ---
 

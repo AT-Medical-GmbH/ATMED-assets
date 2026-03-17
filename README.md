@@ -1,13 +1,17 @@
 # AT Medical Brand Assets
 
-![Type](https://img.shields.io/badge/type-assets-blue)
-![Visibility](https://img.shields.io/badge/visibility-public-brightgreen)
-![Status](https://img.shields.io/badge/status-active-success)
-![Deploy](https://img.shields.io/badge/deploy-R2%20%7C%20CDN-orange)
-![Team](https://img.shields.io/badge/team-infrastructure-informational)
-![Team](https://img.shields.io/badge/team-design-blueviolet)
-
 Official brand asset repository of AT Medical GmbH — the single authoritative source for all visual identity assets used across the AT Medical ecosystem.
+
+![Repository Type](https://img.shields.io/badge/type-assets-blue?style=flat-square)
+![Layer](https://img.shields.io/badge/layer-brand--identity-blueviolet?style=flat-square)
+![Visibility](https://img.shields.io/badge/visibility-public-brightgreen?style=flat-square)
+![Status](https://img.shields.io/badge/status-active-brightgreen?style=flat-square)
+![Release Channel](https://img.shields.io/badge/release--channel-stable-blue?style=flat-square)
+![Team](https://img.shields.io/badge/team-design--communications-orange?style=flat-square)
+![License](https://img.shields.io/badge/license-proprietary-red?style=flat-square)
+![Deploy](https://img.shields.io/badge/deploy-R2%20%7C%20CDN-orange?style=flat-square)
+![CI Validation](https://github.com/AT-Medical/ATMED-assets/actions/workflows/ci-validation.yml/badge.svg)
+![Governance Check](https://github.com/AT-Medical/ATMED-assets/actions/workflows/governance-check.yml/badge.svg)
 
 ---
 
@@ -87,6 +91,7 @@ assets/
 
 docs/                       Repository documentation
 metadata/                   Repository profile and governance metadata
+scripts/                    Validation and maintenance scripts
 ```
 
 ---
@@ -163,6 +168,8 @@ External contributors and internal team members may propose additional assets or
 - Contributors must confirm that submitted assets are original works or that appropriate rights have been obtained and that the submission does not infringe third-party intellectual property.
 - Maintainers reserve the right to reject any contribution that does not meet brand standards or legal requirements.
 
+For detailed contribution guidelines, see [CONTRIBUTING.md](./CONTRIBUTING.md).
+
 ---
 
 ## Contact
@@ -185,7 +192,7 @@ For general repository questions or contribution guidelines, please open an issu
 | Domain | assets, branding, logos |
 | Visibility | public |
 | Customer-facing | true |
-| Deploy targets | Cloudflare R2, CDN |
+| Deploy targets | Cloudflare R2, CDN, GitHub Releases |
 | Primary team | @AT-Medical/infrastructure-team |
 | Secondary teams | @AT-Medical/admin-team, @AT-Medical/devops-team, @AT-Medical/design-team |
 | Review policy | required |
@@ -197,7 +204,7 @@ For general repository questions or contribution guidelines, please open an issu
 |---|---|
 | Version | 0.9.0 |
 | Date | 2026-03-16 |
-| Status | Verified |
+| Status | verified |
 | Repository | ATMED-assets |
 
 ---

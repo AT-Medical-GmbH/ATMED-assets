@@ -4,105 +4,186 @@ on:
   push:
     branches:
       - main
+      - develop
+      - "feature/**"
+      - "fix/**"
+      - "hotfix/**"
+      - "release/**"
+      - "copilot/**"
   pull_request:
     branches:
       - main
+      - develop
 
 permissions:
   contents: read
 
 jobs:
-  validate:
-    name: Validate Repository Structure
+  structure-validation:
+    name: Repository Structure Validation
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Check required root files exist
+      - name: Validate required root files
         run: |
+          echo "=== Checking required root files ==="
           required_files=(
             "README.md"
             "LICENSE"
-            "SECURITY.md"
             "CONTRIBUTING.md"
+            "SECURITY.md"
             "CODE_OF_CONDUCT.md"
             "CHANGELOG.md"
             "metadata/repository-profile.yml"
             ".github/CODEOWNERS"
           )
-
           failed=0
           for f in "${required_files[@]}"; do
-            if [ ! -f "$f" ]; then
-              echo "FAIL: Required file missing: $f"
-              failed=1
+            if [ -f "$f" ]; then
+              echo "  ✓ $f"
             else
-              echo "OK:   $f"
+              echo "  ✗ MISSING: $f"
+              failed=1
             fi
           done
-
           if [ "$failed" -eq 1 ]; then
-            echo ""
-            echo "One or more required files are missing. Please add them before merging."
+            echo "ERROR: One or more required root files are missing."
             exit 1
           fi
+          echo "All required root files are present."
 
-      - name: Check required asset directories exist
+      - name: Validate required directories
         run: |
+          echo "=== Checking required directories ==="
           required_dirs=(
-            "assets/logos/svg"
-            "assets/logos/png"
-            "assets/wordmarks"
-            "assets/icons"
-            "assets/badges"
-            "assets/branding"
-            "assets/diagrams"
-            "assets/templates"
-            "assets/favicons"
-            "docs"
+            ".github/workflows"
             "metadata"
+            "metadata/tags"
+            "docs"
+            "scripts"
+            "scripts/validate"
+            "assets"
+            "artifacts"
           )
-
           failed=0
           for d in "${required_dirs[@]}"; do
-            if [ ! -d "$d" ]; then
-              echo "FAIL: Required directory missing: $d"
-              failed=1
+            if [ -d "$d" ]; then
+              echo "  ✓ $d/"
             else
-              echo "OK:   $d"
+              echo "  ✗ MISSING: $d/"
+              failed=1
             fi
           done
-
           if [ "$failed" -eq 1 ]; then
-            echo ""
-            echo "One or more required directories are missing."
+            echo "ERROR: One or more required directories are missing."
             exit 1
           fi
+          echo "All required directories are present."
 
-      - name: Check canonical logo path is valid
+      - name: Validate metadata profile
         run: |
-          if [ ! -f "assets/logos/svg/logo.svg" ]; then
-            echo "FAIL: Canonical logo file missing: assets/logos/svg/logo.svg"
+          echo "=== Checking metadata/repository-profile.yml ==="
+          if [ ! -f "metadata/repository-profile.yml" ]; then
+            echo "ERROR: metadata/repository-profile.yml is missing."
             exit 1
           fi
-          echo "OK:   assets/logos/svg/logo.svg"
+          required_keys=(
+            "repository_name"
+            "repository_type"
+            "visibility_class"
+            "primary_team"
+            "sensitivity_level"
+          )
+          failed=0
+          for key in "${required_keys[@]}"; do
+            if grep -q "^${key}:" metadata/repository-profile.yml; then
+              echo "  ✓ $key"
+            else
+              echo "  ✗ MISSING key: $key"
+              failed=1
+            fi
+          done
+          if [ "$failed" -eq 1 ]; then
+            echo "ERROR: repository-profile.yml is missing required keys."
+            exit 1
+          fi
+          echo "repository-profile.yml is valid."
 
-      - name: Check repository profile metadata is valid YAML
+      - name: Validate workflow files exist
         run: |
-          python3 -c "
-          import yaml, sys
-          with open('metadata/repository-profile.yml') as f:
-              data = yaml.safe_load(f)
-          required = ['repo-name', 'repo-type', 'domain', 'visibility', 'customer-facing', 'deploy-targets', 'teams', 'status', 'version']
-          failed = False
-          for key in required:
-              if key not in data:
-                  print(f'FAIL: Missing required key in repository-profile.yml: {key}')
-                  failed = True
-              else:
-                  print(f'OK:   {key}')
-          if failed:
-              sys.exit(1)
-          "
+          echo "=== Checking required workflow files ==="
+          required_workflows=(
+            ".github/workflows/ci-validation.yml"
+            ".github/workflows/governance-check.yml"
+            ".github/workflows/tag-validation.yml"
+            ".github/workflows/dependency-check.yml"
+          )
+          failed=0
+          for wf in "${required_workflows[@]}"; do
+            if [ -f "$wf" ]; then
+              echo "  ✓ $wf"
+            else
+              echo "  ✗ MISSING: $wf"
+              failed=1
+            fi
+          done
+          if [ "$failed" -eq 1 ]; then
+            echo "ERROR: One or more required workflow files are missing."
+            exit 1
+          fi
+          echo "All required workflow files are present."
+
+      - name: Validate asset directories
+        run: |
+          echo "=== Checking asset directories ==="
+          asset_dirs=(
+            "assets/logos"
+            "assets/wordmarks"
+            "assets/icons"
+            "assets/favicons"
+            "assets/social-media"
+            "assets/brand-guidelines"
+          )
+          failed=0
+          for d in "${asset_dirs[@]}"; do
+            if [ -d "$d" ]; then
+              echo "  ✓ $d/"
+            else
+              echo "  ✗ MISSING: $d/"
+              failed=1
+            fi
+          done
+          if [ "$failed" -eq 1 ]; then
+            echo "ERROR: One or more required asset directories are missing."
+            exit 1
+          fi
+          echo "All asset directories are present."
+
+  script-validation:
+    name: Script Executability Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check scripts are executable
+        run: |
+          echo "=== Checking script executability ==="
+          failed=0
+          if [ -d "scripts" ]; then
+            while IFS= read -r -d '' script; do
+              if [ -x "$script" ]; then
+                echo "  ✓ $script"
+              else
+                echo "  ✗ NOT EXECUTABLE: $script"
+                failed=1
+              fi
+            done < <(find scripts -name "*.sh" -print0)
+          fi
+          if [ "$failed" -eq 1 ]; then
+            echo "ERROR: One or more scripts are not executable."
+            exit 1
+          fi
+          echo "All scripts are executable."

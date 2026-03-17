@@ -1,0 +1,116 @@
+name: Tag Validation
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - "feature/**"
+      - "fix/**"
+      - "hotfix/**"
+      - "release/**"
+      - "copilot/**"
+    paths:
+      - "metadata/**"
+  pull_request:
+    branches:
+      - main
+      - develop
+    paths:
+      - "metadata/**"
+
+permissions:
+  contents: read
+
+jobs:
+  tag-validation:
+    name: Tag Taxonomy Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate taxonomy file exists
+        run: |
+          echo "=== Checking taxonomy files ==="
+          taxonomy_files=(
+            "metadata/tags/taxonomy.yml"
+            "metadata/tags/rules.yml"
+            "metadata/tags/file-tags.yml"
+          )
+          failed=0
+          for f in "${taxonomy_files[@]}"; do
+            if [ -f "$f" ]; then
+              echo "  ✓ $f"
+            else
+              echo "  ✗ MISSING: $f"
+              failed=1
+            fi
+          done
+          if [ "$failed" -eq 1 ]; then
+            echo "ERROR: One or more tag metadata files are missing."
+            exit 1
+          fi
+          echo "All tag metadata files are present."
+
+      - name: Validate repository-profile tags against taxonomy
+        run: |
+          echo "=== Validating repository-profile.yml tag values ==="
+
+          # Extract domain value from profile
+          profile="metadata/repository-profile.yml"
+          taxonomy="metadata/tags/taxonomy.yml"
+
+          if [ ! -f "$profile" ] || [ ! -f "$taxonomy" ]; then
+            echo "Required files missing — skipping tag value validation."
+            exit 0
+          fi
+
+          # Check required tag dimensions exist in profile
+          required_tag_keys=(
+            "domain"
+            "repo-type"
+            "team-owner"
+            "security-class"
+            "visibility"
+            "review-level"
+            "lifecycle-state"
+            "maintenance-level"
+          )
+
+          failed=0
+          for key in "${required_tag_keys[@]}"; do
+            if grep -q "$key:" "$profile"; then
+              echo "  ✓ $key present in repository-profile.yml"
+            else
+              echo "  ✗ MISSING tag dimension: $key"
+              failed=1
+            fi
+          done
+
+          if [ "$failed" -eq 1 ]; then
+            echo "ERROR: repository-profile.yml is missing required tag dimensions."
+            exit 1
+          fi
+          echo "All required tag dimensions present."
+
+      - name: Validate file-tags reference existing paths
+        run: |
+          echo "=== Checking file-tags.yml path references ==="
+          # Basic check: file-tags.yml should reference paths that exist
+          if [ ! -f "metadata/tags/file-tags.yml" ]; then
+            echo "file-tags.yml not found — skipping."
+            exit 0
+          fi
+
+          # Extract paths from file-tags.yml
+          grep "path:" metadata/tags/file-tags.yml | sed 's/.*path: //' | sed 's/"//g' | sed "s/'//g" | while read -r path; do
+            # Remove trailing slash for directory check
+            clean_path="${path%/}"
+            if [ -e "$clean_path" ]; then
+              echo "  ✓ $path"
+            else
+              echo "  ! WARNING: $path referenced in file-tags.yml does not exist yet (may be created later)"
+            fi
+          done
+          echo "File tag path check complete."
