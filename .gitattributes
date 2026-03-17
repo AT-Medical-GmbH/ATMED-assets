@@ -1,0 +1,83 @@
+# ATMED-assets — Git Attributes
+# Ensures correct line endings and binary handling for all asset types.
+# Binary files are marked as binary to prevent diff/merge corruption.
+# Large binary assets should be managed via Git LFS.
+
+# ─── Default behaviour ────────────────────────────────────────────────────────
+# Normalise line endings to LF for all text files
+* text=auto eol=lf
+
+# ─── Explicit text files ──────────────────────────────────────────────────────
+*.md        text eol=lf
+*.txt       text eol=lf
+*.yml       text eol=lf
+*.yaml      text eol=lf
+*.json      text eol=lf
+*.sh        text eol=lf
+*.bash      text eol=lf
+*.css       text eol=lf
+*.html      text eol=lf
+*.xml       text eol=lf
+*.svg       text eol=lf
+
+# ─── Binary image assets ──────────────────────────────────────────────────────
+# These files must never be treated as text; diff and merge are disabled.
+*.png       binary
+*.jpg       binary
+*.jpeg      binary
+*.gif       binary
+*.webp      binary
+*.avif      binary
+*.tiff      binary
+*.tif       binary
+*.bmp       binary
+*.ico       binary
+
+# ─── Binary vector / design source files ─────────────────────────────────────
+*.ai        binary
+*.eps       binary
+*.psd       binary
+*.psb       binary
+*.sketch    binary
+*.fig       binary
+*.xd        binary
+*.indd      binary
+
+# ─── Binary document / presentation files ────────────────────────────────────
+*.pdf       binary
+*.ppt       binary
+*.pptx      binary
+*.doc       binary
+*.docx      binary
+*.xls       binary
+*.xlsx      binary
+
+# ─── Binary font files ────────────────────────────────────────────────────────
+*.woff      binary
+*.woff2     binary
+*.ttf       binary
+*.otf       binary
+*.eot       binary
+
+# ─── Archive files ────────────────────────────────────────────────────────────
+*.zip       binary
+*.tar       binary
+*.gz        binary
+*.7z        binary
+
+# ─── Git LFS tracking ─────────────────────────────────────────────────────────
+# Uncomment the lines below and run `git lfs install` to enable LFS for large
+# binary assets. Recommended for files larger than 1 MB.
+#
+# *.png       filter=lfs diff=lfs merge=lfs -text
+# *.jpg       filter=lfs diff=lfs merge=lfs -text
+# *.jpeg      filter=lfs diff=lfs merge=lfs -text
+# *.gif       filter=lfs diff=lfs merge=lfs -text
+# *.webp      filter=lfs diff=lfs merge=lfs -text
+# *.ico       filter=lfs diff=lfs merge=lfs -text
+# *.pdf       filter=lfs diff=lfs merge=lfs -text
+# *.ai        filter=lfs diff=lfs merge=lfs -text
+# *.eps       filter=lfs diff=lfs merge=lfs -text
+# *.psd       filter=lfs diff=lfs merge=lfs -text
+# *.sketch    filter=lfs diff=lfs merge=lfs -text
+# *.fig       filter=lfs diff=lfs merge=lfs -text
