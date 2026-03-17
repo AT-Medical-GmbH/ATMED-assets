@@ -145,6 +145,7 @@ The following steps require manual action by an AT Medical maintainer and cannot
 
 | Step                              | Action Required                                                  |
 |-----------------------------------|------------------------------------------------------------------|
+| Merge PR #2 into main             | PR is now fully conflict-free; merge via GitHub UI when approved  |
 | Branch protection rules           | Configure in GitHub repository settings for `main` and `develop` |
 | Team access configuration         | Assign the `design-communications` and `infrastructure` teams in GitHub settings |
 | Dependabot label creation         | Create the `compatibility` label in GitHub Issues settings       |
