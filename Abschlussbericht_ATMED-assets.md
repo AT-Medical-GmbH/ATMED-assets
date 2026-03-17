@@ -179,7 +179,7 @@ The following steps require manual action by an AT Medical maintainer and cannot
 ---
 
 <sub style="color: grey; padding-left: 1em; border-left: 3px solid #ccc; display: block;">
-Version: 0.9.0 &nbsp;|&nbsp; Date: 2026-03-16 &nbsp;|&nbsp; Status: verified &nbsp;|&nbsp; Repository: ATMED-assets
+Version: 0.9.0 &nbsp;|&nbsp; Date: 2026-03-17 &nbsp;|&nbsp; Status: verified &nbsp;|&nbsp; Repository: ATMED-assets
 </sub>
 
 ---
