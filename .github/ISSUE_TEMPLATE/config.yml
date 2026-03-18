@@ -1,0 +1,15 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: AT Medical Brand Guidelines
+    url: https://github.com/AT-Medical/ATMED-assets/tree/main/assets/brand-guidelines
+    about: Review the official AT Medical brand guidelines before submitting an asset request.
+  - name: Contributing Guidelines
+    url: https://github.com/AT-Medical/ATMED-assets/blob/main/CONTRIBUTING.md
+    about: Read the contribution requirements and pull request process.
+  - name: Security Policy
+    url: https://github.com/AT-Medical/ATMED-assets/blob/main/SECURITY.md
+    about: Report a security vulnerability via the responsible disclosure process.
+  - name: AT Medical Website
+    url: https://at-medical.com
+    about: Visit the AT Medical GmbH website for general enquiries.
