@@ -1,0 +1,26 @@
+/*
+ * ATMED Authentik Brand Custom CSS.
+ * Paste into: Admin Interface -> Brands -> <brand> -> "Custom CSS".
+ * Minimal, update-safe footer for Authentik flow/login/error pages.
+ * Full footer lives on the prepended static landing page (see README).
+ */
+.pf-c-login__main-footer,
+.pf-c-login__footer {
+  --atmed-fg-muted: #6b7a8d;
+  --atmed-accent: #0a6cff;
+}
+
+/* Append ATMED legal line below the Authentik login card. */
+.pf-c-login__main::after {
+  content: "© AT Medical GmbH — Alle Rechte vorbehalten";
+  display: block;
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--atmed-fg-muted, #6b7a8d);
+}
+
+/* Legal links rendered via a small footer block the brand template exposes. */
+.pf-c-login__footer a {
+  color: var(--atmed-accent, #0a6cff);
+}

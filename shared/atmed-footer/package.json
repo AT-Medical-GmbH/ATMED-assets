@@ -1,0 +1,18 @@
+{
+  "name": "atmed-global-footer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Zentral gepflegter, systemuebergreifender ATMED-Footer (Shared-UI mit Integrationsadaptern).",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-footer.mjs",
+    "check": "node scripts/build-footer.mjs --check",
+    "test": "node scripts/test-footer.mjs",
+    "deploy": "node scripts/deploy-footer.mjs",
+    "release": "node scripts/build-footer.mjs && node scripts/test-footer.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "UNLICENSED"
+}

@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ATMED Footer Configuration",
+  "type": "object",
+  "required": ["schemaVersion", "company", "copyright", "linkGroups"],
+  "additionalProperties": true,
+  "properties": {
+    "schemaVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "configVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "environment": { "type": "string", "enum": ["production", "staging", "development"] },
+        "sourceOfTruth": { "type": "string" },
+        "note": { "type": "string" }
+      }
+    },
+    "company": {
+      "type": "object",
+      "required": ["legalName", "displayName"],
+      "properties": {
+        "legalName": { "type": "string", "minLength": 1 },
+        "displayName": { "type": "string", "minLength": 1 },
+        "claim": { "type": "string" },
+        "logo": {
+          "type": "object",
+          "required": ["src", "alt"],
+          "properties": {
+            "src": { "type": "string", "minLength": 1 },
+            "fallbackSrc": { "type": "string" },
+            "alt": { "type": "string", "minLength": 1 },
+            "width": { "type": "integer", "minimum": 16, "maximum": 1024 }
+          }
+        }
+      }
+    },
+    "copyright": {
+      "type": "object",
+      "required": ["line", "rights"],
+      "properties": {
+        "startYear": { "type": "integer" },
+        "endYear": { "type": "integer" },
+        "line": { "type": "string", "minLength": 1 },
+        "rights": { "type": "string", "minLength": 1 }
+      }
+    },
+    "linkGroups": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "audience", "links"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "title": { "type": "string", "minLength": 1 },
+          "audience": { "type": "string", "enum": ["public", "internal", "admin"] },
+          "links": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["label", "href"],
+              "properties": {
+                "label": { "type": "string", "minLength": 1 },
+                "href": { "type": "string", "minLength": 1 },
+                "rel": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "social": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["label", "href"],
+        "properties": {
+          "label": { "type": "string" },
+          "href": { "type": "string" },
+          "icon": { "type": "string" }
+        }
+      }
+    },
+    "options": { "type": "object" }
+  }
+}
