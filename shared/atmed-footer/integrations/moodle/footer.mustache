@@ -1,0 +1,14 @@
+{{!
+    ATMED Footer partial for Moodle child themes.
+    Place at: theme/<atmed_child>/templates/atmed/footer.mustache
+    and reference from the child theme's core/footer.mustache override via
+    {{> atmed/footer }}.
+
+    Content mirrors dist/footer.html. Re-sync via deploy-footer after each
+    central release. Do not hand-edit beyond re-syncing.
+}}
+<div id="atmed-global-footer"
+     data-atmed-base="{{ config.wwwroot }}/theme/atmed/atmed-footer"
+     data-atmed-variant="public"
+     data-atmed-theme="auto"></div>
+<script src="{{ config.wwwroot }}/theme/atmed/atmed-footer/footer-loader.js" defer></script>

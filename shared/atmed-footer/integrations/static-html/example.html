@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ATMED Control Center - Footer-Einbindung (Beispiel)</title>
+    <style>
+      /* Sticky-Footer-Layout: Footer immer am Seitenende, nie ueber Inhalten. */
+      html, body { height: 100%; margin: 0; }
+      body { display: flex; flex-direction: column; min-height: 100vh; font-family: Inter, system-ui, sans-serif; }
+      main { flex: 1 0 auto; padding: 2rem; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Beispiel-Dashboard</h1>
+      <p>Inhalt der Seite. Der ATMED-Footer wird unten automatisch geladen.</p>
+    </main>
+
+    <!-- 1) Mount-Punkt: -->
+    <div id="atmed-global-footer"
+         data-atmed-base="/atmed-footer"
+         data-atmed-variant="internal"
+         data-atmed-theme="auto"
+         data-atmed-compact="true"></div>
+
+    <!-- 2) Loader (lokale, vendorierte Kopie - keine externe Abhaengigkeit): -->
+    <script src="/atmed-footer/footer-loader.js" defer></script>
+  </body>
+</html>
