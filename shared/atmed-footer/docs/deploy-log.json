@@ -5,5 +5,12 @@
     "version": "1.0.0+2026-06-30.0d95b89ea2ce",
     "contentHash": "0d95b89ea2ce",
     "deployedAt": "2026-06-30T16:16:17.192Z"
+  },
+  {
+    "system": "system-control-suite",
+    "target": "../../../ATMED-system-control-suite/frontend/atmed-footer",
+    "version": "1.0.0+2026-06-30.0d95b89ea2ce",
+    "contentHash": "0d95b89ea2ce",
+    "deployedAt": "2026-07-01T05:40:00.767Z"
   }
 ]
