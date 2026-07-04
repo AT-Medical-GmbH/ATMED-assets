@@ -1,0 +1,29 @@
+{
+  "$comment": "Single source of truth for the AT Medical central footer. Edit HERE only. Serving this file same-origin via the gateway makes every surface (WordPress, Authentik login, Moodle, Nextcloud, ...) update at once. Wording/URLs mirror the WordPress site footer.",
+  "version": "1.0.0",
+  "updated": "2026-07-04",
+  "brand": {
+    "logo": "https://raw.githubusercontent.com/AT-Medical/ATMED-assets/main/assets/logos/svg/logo.svg",
+    "name": "AT Medical GmbH",
+    "tagline": "Enterprise Medical Education & Clinical Intelligence"
+  },
+  "legal": [
+    { "label": "Impressum", "href": "https://www.at-medical.de/impressum" },
+    { "label": "AGB", "href": "https://www.at-medical.de/legal/agb" },
+    { "label": "Datenschutz", "href": "https://www.at-medical.de/legal/datenschutz" },
+    { "label": "Widerruf", "href": "https://www.at-medical.de/legal/widerruf" },
+    { "label": "Sicherheit", "href": "https://www.at-medical.de/it-security" },
+    { "label": "Barrierefreiheit", "href": "https://www.at-medical.de/legal/barrierefreiheit" },
+    { "label": "Code of Conduct", "href": "https://www.at-medical.de/code-of-conduct" },
+    { "label": "Lieferkettenschutzgesetz", "href": "https://www.at-medical.de/legal/lieferkettenschutzgesetz" },
+    { "label": "Kontakt", "href": "https://www.at-medical.de/kontakt" }
+  ],
+  "social": [
+    { "label": "LinkedIn", "href": "https://www.linkedin.com/company/at-medical", "icon": "linkedin" },
+    { "label": "Instagram", "href": "https://www.instagram.com/at.medical", "icon": "instagram" },
+    { "label": "Xing", "href": "https://www.xing.com/companies/atmedical", "icon": "xing" },
+    { "label": "YouTube", "href": "https://www.youtube.com/@at-medical", "icon": "youtube" }
+  ],
+  "copyright_html": "&copy; Copyright 2017 &ndash; 2026 | <strong>AT Medical GmbH&reg;</strong><br>Alle Rechte vorbehalten | All Rights reserved",
+  "contact_email": "Info@at-medical.de"
+}
