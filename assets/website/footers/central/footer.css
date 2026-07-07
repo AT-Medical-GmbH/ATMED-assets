@@ -1,0 +1,33 @@
+/* =========================================================================
+ * AT Medical — Central Footer (standalone CSS)
+ * Use with footer.html for surfaces that include the static fragment instead
+ * of the JS loader. Kept in sync with the CSS embedded in footer.js.
+ * ========================================================================= */
+.atmed-footer { background:#111827; color:#d1d5db; font-size:.875rem; margin-top:auto;
+  font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif; }
+.atmed-footer * { box-sizing:border-box; }
+.atmed-footer .af-inner { max-width:1100px; margin:0 auto; padding:2.5rem 1.5rem 1.5rem; }
+.atmed-footer .af-top { display:grid; grid-template-columns:1fr 2fr 1fr; gap:2rem;
+  padding-bottom:2rem; border-bottom:1px solid rgba(255,255,255,.08); align-items:start; }
+.atmed-footer .af-brand img { height:36px; filter:brightness(0) invert(1); opacity:.9; margin-bottom:.75rem; }
+.atmed-footer .af-brand p { font-size:.8125rem; color:#9ca3af; line-height:1.6; margin:0; }
+.atmed-footer .af-nav { display:flex; flex-wrap:wrap; gap:.375rem 1.25rem; align-items:flex-start; }
+.atmed-footer .af-nav a { color:#9ca3af; font-size:.8125rem; text-decoration:none; transition:color .2s ease; }
+.atmed-footer .af-nav a:hover, .atmed-footer .af-nav a:focus-visible { color:#fff; text-decoration:underline; }
+.atmed-footer .af-social { display:flex; gap:.75rem; justify-content:flex-end; flex-wrap:wrap; }
+.atmed-footer .af-social a { display:flex; align-items:center; justify-content:center; width:36px; height:36px;
+  background:rgba(255,255,255,.06); border-radius:6px; color:#9ca3af; transition:background .2s ease,color .2s ease; }
+.atmed-footer .af-social a:hover, .atmed-footer .af-social a:focus-visible { background:#0a7ea4; color:#fff; }
+.atmed-footer .af-social svg { width:18px; height:18px; display:block; pointer-events:none; }
+.atmed-footer .af-bottom { padding-top:1.25rem; display:flex; flex-wrap:wrap; justify-content:space-between;
+  align-items:flex-start; gap:1rem; }
+.atmed-footer .af-copy { font-size:.8125rem; color:#9ca3af; line-height:1.7; }
+.atmed-footer .af-copy a { color:#9ca3af; }
+.atmed-footer .af-copy a:hover { color:#fff; }
+.atmed-footer .af-ver { font-size:.75rem; color:rgba(156,163,175,.65); text-align:right; line-height:1.7; }
+@media (max-width:720px) {
+  .atmed-footer .af-top { grid-template-columns:1fr; gap:1.5rem; }
+  .atmed-footer .af-social { justify-content:flex-start; }
+  .atmed-footer .af-bottom { flex-direction:column; }
+  .atmed-footer .af-ver { text-align:left; }
+}
