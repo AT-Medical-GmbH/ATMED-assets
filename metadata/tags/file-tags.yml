@@ -3,7 +3,7 @@
 # Updated as new assets are added to the repository.
 
 version: "1.0"
-last_updated: "2026-03-16"
+last_updated: "2026-07-15"
 
 file_tags:
 
@@ -27,6 +27,13 @@ file_tags:
       security-class: proprietary
       team-owner: design-communications
       review-level: recommended
+
+  - path: assets/branding/
+    tags:
+      domain: brand-identity
+      security-class: proprietary
+      team-owner: design-communications
+      review-level: mandatory
 
   - path: assets/illustrations/
     tags:
