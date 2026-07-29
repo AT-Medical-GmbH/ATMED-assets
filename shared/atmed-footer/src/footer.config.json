@@ -2,58 +2,74 @@
   "$schema": "./schema.json",
   "schemaVersion": "1.0.0",
   "meta": {
-    "configVersion": "1.0.0",
+    "configVersion": "1.1.0",
     "environment": "production",
-    "sourceOfTruth": ".github/repo-templates/FOOTER_SNIPPET.md (organisationsweit verbindlich)",
-    "note": "Zentrale Quelle der Wahrheit fuer den ATMED-Footer. Inhalte hier pflegen, dann `npm run build` ausfuehren. Niemals dist/ von Hand editieren."
+    "sourceOfTruth": "ATMED-wordpress/wp-content/themes/atmedical/inc-footer.php (produktiver Live-Footer der AT-Medical-WordPress-Seite)",
+    "note": "Zentrale Quelle der Wahrheit fuer den ATMED-Footer. Inhalt 1:1 aus dem produktiven WordPress-Footer uebernommen. Inhalte hier pflegen, dann `npm run build` ausfuehren. Niemals dist/ von Hand editieren."
   },
   "company": {
     "legalName": "AT Medical GmbH",
     "displayName": "AT Medical GmbH®",
-    "claim": "Digitale Medizintechnik & sichere Gesundheits-IT",
+    "claim": "AT Medical GmbH® entwickelt Lösungen in den Bereichen medizinische Bildung, digitale Infrastruktur, Patientensicherheit und klinische Innovation.",
     "logo": {
-      "src": "https://assets.at-medical.de/logos/atmed-logo.svg",
+      "src": "https://raw.githubusercontent.com/AT-Medical/ATMED-assets/main/assets/logos/svg/logo.svg",
       "fallbackSrc": "https://raw.githubusercontent.com/AT-Medical/ATMED-assets/main/logo.png",
-      "alt": "AT Medical GmbH Logo",
+      "alt": "AT Medical GmbH®",
       "width": 140
     }
   },
   "copyright": {
     "startYear": 2017,
     "endYear": 2026,
-    "line": "© Copyright 2017 - 2026 | AT Medical GmbH®",
+    "line": "© Copyright 2017 – 2026 | AT Medical GmbH®",
     "rights": "Alle Rechte vorbehalten | All rights reserved"
   },
   "linkGroups": [
     {
-      "id": "legal",
-      "title": "Rechtliches",
+      "id": "leistungen",
+      "title": "Leistungen",
       "audience": "public",
       "links": [
-        { "label": "Impressum", "href": "https://www.at-medical.de/impressum", "rel": "" },
-        { "label": "AGB", "href": "https://www.at-medical.de/legal/agb", "rel": "" },
-        { "label": "Datenschutz", "href": "https://www.at-medical.de/legal/datenschutz", "rel": "" },
-        { "label": "Widerruf", "href": "https://www.at-medical.de/legal/widerruf", "rel": "" },
-        { "label": "Barrierefreiheit", "href": "https://www.at-medical.de/legal/barrierefreiheit", "rel": "" },
-        { "label": "Lieferkettenschutzgesetz", "href": "https://www.at-medical.de/legal/lieferkettenschutzgesetz", "rel": "" }
+        { "label": "Akademie", "href": "https://at-medical.de/de/akademie/" },
+        { "label": "Digitale Lösungen", "href": "https://at-medical.de/de/digitale-loesungen/" },
+        { "label": "Patientensicherheit", "href": "https://at-medical.de/de/patientensicherheit/" },
+        { "label": "Forschung & Entwicklung", "href": "https://at-medical.de/de/forschung-entwicklung/" },
+        { "label": "Medical Services", "href": "https://at-medical.de/de/medical-services/" }
       ]
     },
     {
-      "id": "company",
+      "id": "unternehmen",
       "title": "Unternehmen",
       "audience": "public",
       "links": [
-        { "label": "IT-Sicherheit", "href": "https://www.at-medical.de/it-security", "rel": "" },
-        { "label": "Code of Conduct", "href": "https://www.at-medical.de/code-of-conduct", "rel": "" }
+        { "label": "Über uns", "href": "https://at-medical.de/de/ueber-at-medical/" },
+        { "label": "Team & Netzwerk", "href": "https://at-medical.de/de/ueber-at-medical/team-netzwerk/" },
+        { "label": "Verantwortung", "href": "https://at-medical.de/de/verantwortung/" },
+        { "label": "Kontakt", "href": "https://at-medical.de/de/kontakt/" },
+        { "label": "Presse", "href": "https://at-medical.de/de/presse/" },
+        { "label": "FAQ", "href": "https://at-medical.de/de/faq/" },
+        { "label": "Feedback", "href": "https://at-medical.de/de/feedback/" },
+        { "label": "Sitemap", "href": "https://at-medical.de/de/sitemap/" },
+        { "label": "Systemstatus", "href": "https://status.at-medical.de", "rel": "noopener" },
+        { "label": "AT Digital Systems GmbH", "href": "https://at-medical.de/de/at-digital-systems-gmbh/" },
+        { "label": "Tremml & Kopp Holding GmbH & Co. KG", "href": "https://at-medical.de/de/tremml-kopp-holding/" },
+        { "label": "Newsletter", "href": "https://at-medical.de/de/newsletter/" }
       ]
     },
     {
-      "id": "contact",
-      "title": "Kontakt",
+      "id": "rechtliches",
+      "title": "Rechtliches",
       "audience": "public",
       "links": [
-        { "label": "Kontaktformular", "href": "https://www.at-medical.de/kontakt", "rel": "" },
-        { "label": "Info@at-medical.de", "href": "mailto:Info@at-medical.de", "rel": "" }
+        { "label": "Impressum", "href": "https://at-medical.de/de/impressum/" },
+        { "label": "Datenschutz (DSGVO)", "href": "https://at-medical.de/de/datenschutz/" },
+        { "label": "Allgemeine Geschäftsbedingungen (AGB)", "href": "https://at-medical.de/de/agb/" },
+        { "label": "Widerruf", "href": "https://at-medical.de/de/widerruf/" },
+        { "label": "Sicherheit", "href": "https://at-medical.de/de/sicherheit/" },
+        { "label": "Barrierefreiheit", "href": "https://at-medical.de/de/barrierefreiheit/" },
+        { "label": "Nutzungsbedingungen", "href": "https://at-medical.de/de/nutzungsbedingungen/" },
+        { "label": "Code of Conduct", "href": "https://at-medical.de/de/code-of-conduct/" },
+        { "label": "Lieferkettenschutzgesetz", "href": "https://at-medical.de/de/lieferkettenschutzgesetz/" }
       ]
     },
     {
@@ -67,7 +83,12 @@
       ]
     }
   ],
-  "social": [],
+  "social": [
+    { "label": "LinkedIn", "href": "https://www.linkedin.com/company/at-medical", "icon": "linkedin" },
+    { "label": "Facebook", "href": "https://www.facebook.com/atmedical", "icon": "facebook" },
+    { "label": "Instagram", "href": "https://www.instagram.com/at_medical_gmbh", "icon": "instagram" },
+    { "label": "X", "href": "https://x.com/atmedical", "icon": "x" }
+  ],
   "options": {
     "showLogo": true,
     "showClaim": true,

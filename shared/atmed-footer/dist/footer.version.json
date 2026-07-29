@@ -1,10 +1,10 @@
 {
   "name": "atmed-global-footer",
-  "version": "1.0.0+2026-06-30.0d95b89ea2ce",
-  "configVersion": "1.0.0",
+  "version": "1.1.0+2026-07-04.f78b21cd4027",
+  "configVersion": "1.1.0",
   "environment": "production",
-  "contentHash": "0d95b89ea2ce",
-  "buildDate": "2026-06-30T16:21:17.374Z",
+  "contentHash": "f78b21cd4027",
+  "buildDate": "2026-07-04T18:05:09.604Z",
   "artifacts": [
     "footer.html",
     "footer.internal.html",
