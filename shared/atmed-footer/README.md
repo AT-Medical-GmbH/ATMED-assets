@@ -82,7 +82,9 @@ Siehe jeweils `integrations/<system>/README.md`. Erste produktive Integration:
 
 ## Inhaltsquelle / Live-Stand
 
-Der Inhalt basiert auf der organisationsweit verbindlichen Quelle
-`.github/repo-templates/FOOTER_SNIPPET.md`. Das produktive WordPress-Theme ist
-nicht im Repo eingecheckt; sobald der Live-Footer-HTML vorliegt, wird nur
-`src/footer.config.json` angepasst.
+Der Inhalt entspricht seit **1.1.0** exakt dem produktiven WordPress-Footer.
+Quelle der Wahrheit ist der eingecheckte Live-Theme-Footer
+`ATMED-wordpress/wp-content/themes/atmedical/inc-footer.php`. Änderungen am
+Footer erfolgen ausschließlich über `src/footer.config.json` + `npm run release`
+und werden anschließend in WordPress und alle Zielsysteme vendoriert, damit
+überall derselbe Stand läuft.
